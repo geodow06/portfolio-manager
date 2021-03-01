@@ -13,6 +13,8 @@ const redirectRoute = [
 
 const errorRoute = [
     {
+        path:"*",
+        exact:true,
         component: () => <Redirect to="/session/404" />
     }
 ]
