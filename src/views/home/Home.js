@@ -6,14 +6,15 @@ function Home({ number, increase, decrease }){
         <div>
             Welcome home
             <div>
-            Some state changes:
-            {number}
-            <button onClick={() => increase(1)}>Increase</button>
-            <button onClick={() => decrease(1)}>Decrease</button>
+                Some state changes:
+                {number}
+                <button onClick={() => increase(1)}>Increase</button>
+                <button onClick={() => decrease(1)}>Decrease</button>
             </div>
         </div>
     );
 }
+
 
 export default connect(
     state => ({ number: state.count.number }),
