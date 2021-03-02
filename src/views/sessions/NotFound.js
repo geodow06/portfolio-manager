@@ -7,6 +7,7 @@ class NotFound extends Component {
     return (
       <div className="flex flex-center flex-middle w-100 h-100vh">
         <div className="flex flex-column flex-center flex-middle" style={{ maxWidth: "320px" }}>
+          Page not found
           <Button
             className="capitalize"
             variant="contained"
