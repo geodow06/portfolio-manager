@@ -1,5 +1,5 @@
 import "./App.css";
-import { Router } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import history from "history.js";
 import { Provider } from "react-redux"
 import { Store } from "./redux/Store";
@@ -13,9 +13,11 @@ const App = () => {
       {/* Nesting components in Provider makes the store 
       available to any component wrapped in a connect() function) */}
       <Provider store={Store}>
-        <Router history={history}>
+        <BrowserRouter history={history}>
+          <Switch>
             <PortfolioLayout/>
-        </Router>
+          </Switch>
+        </BrowserRouter>
       </Provider>
     </AppContext.Provider>
   );
