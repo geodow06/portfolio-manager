@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-
+import { loginWithUsernameAndPassword } from "redux/actions/LoginActions";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import { Button } from "@material-ui/core";
 class SignIn extends Component {
 
     state = {
@@ -16,7 +19,7 @@ class SignIn extends Component {
     };
 
     handleSubmit = event => {
-        event.preventDefault();
+        this.props.loginWithUsernameAndPassword({ ...this.state })
         // TODO
     };
 
@@ -24,6 +27,8 @@ class SignIn extends Component {
         let { username, password } = this.state;
         return(
             <div>
+                {this.state.username}
+                {this.state.password}
                 <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                     <TextValidator
                         label="Username"
@@ -51,10 +56,24 @@ class SignIn extends Component {
                             "password is not valid"
                         ]}
                     />
+                    <Button
+                        disabled={this.props.login.loading}
+                        type="submit"
+                    >
+                        Sign In
+                    </Button>
                 </ValidatorForm>
             </div>
         );
     }
 }
 
-export default SignIn
+SignIn.propTypes = {
+    login: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    login: state.login
+});
+
+export default connect(mapStateToProps,{ loginWithUsernameAndPassword })(SignIn)

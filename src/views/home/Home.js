@@ -4,13 +4,16 @@ import { increase, decrease } from "redux/actions/count"
 import React, { Component } from 'react'
 
 class Home extends Component {
+
     render() {
+        console.log(this.props.login.success)
         return (
             <div>
                 Welcome home
                 <div>
                     Some state changes:
                     { this.props.number }
+                    { this.props.login.success && <p>{this.props.user.username}</p>}
                     <button onClick={() => this.props.increase(1)}>Increase</button>
                     <button onClick={() => this.props.decrease(1)}>Decrease</button>
                 </div>
@@ -23,10 +26,14 @@ Home.propTypes = {
     increase: PropTypes.func.isRequired,
     decrease: PropTypes.func.isRequired,
     number: PropTypes.number.isRequired,
+    login: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    number: state.count.number
+    number: state.count.number,
+    login: state.login,
+    user: state.user
 });
 
 export default connect(mapStateToProps, {increase, decrease})(Home);
