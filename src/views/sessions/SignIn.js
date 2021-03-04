@@ -3,7 +3,9 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { loginWithUsernameAndPassword } from "redux/actions/LoginActions";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import { withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 class SignIn extends Component {
 
     state = {
@@ -20,7 +22,6 @@ class SignIn extends Component {
 
     handleSubmit = event => {
         this.props.loginWithUsernameAndPassword({ ...this.state })
-        // TODO
     };
 
     render() {
@@ -62,6 +63,7 @@ class SignIn extends Component {
                     >
                         Sign In
                     </Button>
+                    {this.props.login.loading && (<CircularProgress/>)}
                 </ValidatorForm>
             </div>
         );
@@ -76,4 +78,4 @@ const mapStateToProps = state => ({
     login: state.login
 });
 
-export default connect(mapStateToProps,{ loginWithUsernameAndPassword })(SignIn)
+export default withRouter(connect(mapStateToProps,{ loginWithUsernameAndPassword })(SignIn));

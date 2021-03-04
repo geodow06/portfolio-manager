@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { increase, decrease } from "redux/actions/count"
+import { logoutUser } from "redux/actions/UserActions";
 import React, { Component } from 'react'
 
 class Home extends Component {
@@ -13,9 +14,10 @@ class Home extends Component {
                 <div>
                     Some state changes:
                     { this.props.number }
-                    { this.props.login.success && <p>{this.props.user.username}</p>}
+                    { this.props.user.token }
                     <button onClick={() => this.props.increase(1)}>Increase</button>
                     <button onClick={() => this.props.decrease(1)}>Decrease</button>
+                    <button onClick={() => this.props.logoutUser()}>Log out</button>
                 </div>
             </div>
         )
@@ -36,4 +38,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, {increase, decrease})(Home);
+export default connect(mapStateToProps, {increase, decrease, logoutUser})(Home);

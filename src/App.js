@@ -1,11 +1,13 @@
 import "./App.css";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { Router, Switch } from "react-router-dom";
 import history from "history.js";
 import { Provider } from "react-redux"
 import { Store } from "./redux/Store";
 import routes from "RootRoutes";
 import AppContext from "appContext";
 import PortfolioLayout from "PortfolioLayout/PortfolioLayout";
+import AuthGuard from "auth/AuthGuard";
+import Auth from "auth/Auth";
 
 const App = () => {
   return (
@@ -13,11 +15,16 @@ const App = () => {
       {/* Nesting components in Provider makes the store 
       available to any component wrapped in a connect() function) */}
       <Provider store={Store}>
-        <BrowserRouter history={history}>
-          <Switch>
-            <PortfolioLayout/>
-          </Switch>
-        </BrowserRouter>
+        <Auth>
+          {/* BrowserRouter ignoreshistory prop */}
+          <Router history={history}>
+            <AuthGuard>
+              <Switch>
+                <PortfolioLayout/>
+              </Switch>
+            </AuthGuard>
+          </Router>
+        </Auth>
       </Provider>
     </AppContext.Provider>
   );

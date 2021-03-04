@@ -1,19 +1,37 @@
 import history from "history.js";
 import { setUserData } from "redux/actions/UserActions";
+import authService from "services/authService";
+
+export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_LOADING = "LOGIN_LOADING";
 
-export function loginWithUsernameAndPassword() {
+export function loginWithUsernameAndPassword({ username, password }) {
     return dispatch => {
-        
-        // TODO add AuthService to return authenticatedUser
-        let authenticatedUser = {username:"JohnDoe06", token:"dummy"}
-
-        dispatch(setUserData(authenticatedUser));
-
-        history.push({ pathname:"/" });
-
         dispatch({
-            type: LOGIN_SUCCESS
+            type: LOGIN_LOADING
         });
-    }
+
+        // TODO add AuthService to return authenticatedUser
+        // Currently set current token to pass Authentication correct 
+        try {
+            let user = authService.loginWithUsernameAndPassword(username, password);
+            
+            dispatch(setUserData(user));
+            
+            history.push({
+                pathname: "/"
+            });
+
+            return dispatch({
+                type: LOGIN_SUCCESS
+            });
+        } catch(error) {
+            console.log(error)
+            return dispatch({
+                type: LOGIN_ERROR,
+                payload: error
+            });
+        }
+    };
 }
