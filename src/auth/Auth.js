@@ -13,7 +13,9 @@ class Auth extends Component {
 
     checkAuth = () => {
         try {
-            authService.loginWithToken();
+            let user = authService.loginWithToken();
+            // Add authenticated user to state
+            this.props.setUser(user);
             // Upon success redirect to home
             this.props.pushTo({pathname: "/dashboard/home"})
 
@@ -31,7 +33,7 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-    setUserData: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired,
     login: PropTypes.object.isRequired
 }
 
@@ -41,7 +43,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     pushTo: url => dispatch(push(url)),
-    setUserData: user => dispatch(setUserData(user))
+    setUser: user => dispatch(setUserData(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

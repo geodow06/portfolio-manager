@@ -2,11 +2,11 @@ import localStorageService from "./localStorageService";
 
 class AuthService {
 
-
-    user = {
-        username:"JohnDoe06",
-        token:"dummy",
-        role: 'ADMIN'
+    // Mock authenticated user response
+    authenticatedUser = {
+        username:"JohnDoe",
+        role:'ADMIN',
+        token: "correctdummy"
     }
 
     loginWithUsernameAndPassword = (username, password) => {
@@ -15,11 +15,7 @@ class AuthService {
         if(password === "go") {
             // API returns token
             // Set token and user details
-            let user = {
-                username:username,
-                role:'ADMIN',
-                token: "correctdummy"
-            }
+            let user = {...this.authenticatedUser, username}
             // Set token in local storage
             this.setSession(user.token);
             // Set user in local storage
@@ -36,7 +32,8 @@ class AuthService {
         if( localStorageService.getToken() !== "correctdummy") {
             throw "Token invalid";
         }
-        console.log("Authenticated")
+        // TODO Mock API return
+        return this.authenticatedUser;
     }
     
     logout = () => {

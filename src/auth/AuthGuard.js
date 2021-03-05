@@ -44,14 +44,11 @@ class AuthGuard extends Component {
         const { location, user } = props;
         const { pathname } = location;
         const matched = state.routes.find(r => r.path === pathname);
-        // TODO fix authentication bug
-        // For now return true
-        const authenticated = true;
-            // matched && matched.auth && matched.auth.length
-            //     // Check matched routes auth Array contains
-            //     // Users access role
-            //     ? matched.auth.includes(user.role)
-            //     : true;
+        const authenticated = matched && matched.auth && matched.auth.length
+                // Check matched routes auth Array contains
+                // Users access role
+                ? matched.auth.includes(user.role)
+                : true;
         return {
             authenticated
         };
@@ -60,12 +57,8 @@ class AuthGuard extends Component {
     redirectRoute(props) {
         // If user role does not allow access to route
         // Redirect to signin view
-        const { location } = props;
-        const { pathname } = location;
-    
-        this.props.pushTo({
+        props.pushTo({
             pathname: "/session/signin",
-            state: { redirectUrl: pathname }    
         })
       }
 
