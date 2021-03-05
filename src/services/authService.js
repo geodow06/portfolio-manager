@@ -2,37 +2,49 @@ import localStorageService from "./localStorageService";
 
 class AuthService {
 
+
     user = {
         username:"JohnDoe06",
-        token:"correct-dummy",
-        password:"INCORRECT"
+        token:"dummy",
+        role: 'ADMIN'
     }
 
     loginWithUsernameAndPassword = (username, password) => {
-        // Add axios API calls
-        if(password === "CORRECT") {
-            console.log("Password correct")
-            // Set token
-            this.setSession(this.user.token);
-
+        // TODO Add axios API calls
+        // Password confirmed
+        if(password === "go") {
+            // API returns token
+            // Set token and user details
+            let user = {
+                username:username,
+                role:'ADMIN',
+                token: "correctdummy"
+            }
+            // Set token in local storage
+            this.setSession(user.token);
             // Set user in local storage
-            this.setUser(this.user);
+            this.setUser(user);
 
-            return this.user;
+            return user;
         } else {
             throw "Failed to authenticate";
         }
     }
 
-    // TODO
-    // loginWithToken = () => {}
+    loginWithToken = () => {
+        // Check local storage for token
+        if( localStorageService.getToken() !== "correctdummy") {
+            throw "Token invalid";
+        }
+        console.log("Authenticated")
+    }
     
-
     logout = () => {
         this.setSession(null);
         this.removeUser();
     }
 
+    // Set accepted token in local storage
     setSession = token => {
         if (token) {
           localStorage.setItem("jwt_token", token);

@@ -1,12 +1,14 @@
+import { connectRouter } from "connected-react-router";
 import { combineReducers } from "redux";
-import count from "./count";
+import countReducer from "./countReducer";
 import LoginReducer from "./LoginReducer";
 import UserReducer from "./UserReducer";
 
-const RootReducer = combineReducers({
-    count: count,
+const rootReducer = history => combineReducers({
+    count: countReducer,
     login: LoginReducer,
-    user: UserReducer
+    user: UserReducer,
+    router: connectRouter(history)
 });
 
-export default RootReducer;
+export default rootReducer;

@@ -1,5 +1,5 @@
 import authService from "services/authService";
-import history from "history.js";
+import { push } from "connected-react-router";
 
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -18,9 +18,7 @@ export function logoutUser() {
     return dispatch => {
         authService.logout();
 
-        history.push({
-            pathname: "/session/signin"
-        });
+        dispatch(push({pathname: "/session/signin"}));
 
         dispatch({
             type: LOGOUT_USER

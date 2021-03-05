@@ -2,40 +2,25 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { setUserData } from "redux/actions/UserActions";
-import localStorageService from "services/localStorageService";
 import authService from "services/authService";
-import history from "history.js";
+import { push } from "connected-react-router";
 
 class Auth extends Component {
-    state = {};
 
-    constructor(props) {
-        super(props);
-        console.log("constructor")
-        // TODO
-        // get from local storage
-        this.props.setUserData(localStorageService.getItem("auth_user"));
-        // check Authorization
+    componentDidMount() {
         this.checkAuth();
     }
 
     checkAuth = () => {
         try {
-            let user = authService.loginWithUsernameAndPassword()
-            console.log("got through")
-            this.props.setUserData(user);
+            authService.loginWithToken();
             // Upon success redirect to home
-            history.push({
-                pathname: "/dashboard/home"
-            });
+            this.props.pushTo({pathname: "/dashboard/home"})
 
         } catch(error) {
             console.log(error);
-
-            // Upon failure redirect to signin page
-            history.push({
-                pathname: "/session/signin"
-            });
+            // Upon failure redirect to signin
+            this.props.pushTo({pathname: "/session/signin"})
         }
     }
 
@@ -54,4 +39,9 @@ const mapStateToProps = state => ({
     login: state.login,
 });
 
-export default connect(mapStateToProps, { setUserData })(Auth);
+const mapDispatchToProps = dispatch => ({
+    pushTo: url => dispatch(push(url)),
+    setUserData: user => dispatch(setUserData(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

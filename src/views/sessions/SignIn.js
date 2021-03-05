@@ -9,7 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 class SignIn extends Component {
 
     state = {
-        username: "",
+        username: "default",
         password: ""
     }
 
@@ -28,8 +28,6 @@ class SignIn extends Component {
         let { username, password } = this.state;
         return(
             <div>
-                {this.state.username}
-                {this.state.password}
                 <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                     <TextValidator
                         label="Username"
@@ -71,7 +69,8 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-    login: PropTypes.object.isRequired
+    login: PropTypes.object.isRequired,
+    loginWithUsernameAndPassword: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

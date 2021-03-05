@@ -9,12 +9,18 @@ class localStorageService {
     }
 
     getItem(key) {
-        let value = this.ls.getItem(key)
+        let value = this.ls.getItem(key);
         try {
-          return JSON.parse(value)
+          return JSON.parse(value);
         } catch (error) {
-          return null
+          console.log(error)
+          return null;
         }
+    }
+
+    getToken() {
+      let value = this.ls.getItem("jwt_token");
+      return value;
     }
 }
 

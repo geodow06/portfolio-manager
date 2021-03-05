@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { withRouter } from "react-router-dom";
 
 class NotFound extends Component {
   state = {};
@@ -12,7 +16,7 @@ class NotFound extends Component {
             className="capitalize"
             variant="contained"
             color="primary"
-            onClick={() => this.props.history.push("/")}
+            onClick={() => this.props.pushTo({pathname: "/"})}
           >
             Back to Dashboard
           </Button>
@@ -22,4 +26,12 @@ class NotFound extends Component {
   }
 }
 
-export default NotFound;
+NotFound.propTypes = {
+  pushTo: PropTypes.func.isRequired
+}
+
+const mapDispatchToProp = dispatch => ({
+  pushTo: url => dispatch(push(url)),
+});
+
+export default withRouter(connect(null,mapDispatchToProp)(NotFound));

@@ -1,6 +1,6 @@
 import { SET_USER_DATA, LOGOUT_USER, REMOVE_USER_DATA } from "redux/actions/UserActions";
 
-const initialState = {username: "UnauthenticatedUser", token: "dummy"};
+const initialState = {};
 
 const userReducer = function(state = initialState, action) {
     if (action.type === SET_USER_DATA) {

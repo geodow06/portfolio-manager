@@ -13,7 +13,8 @@ class PortfolioLayout extends Component {
     render() {
         const Layout = GeodowLoadable({
             loader: () => import("./Layout/Layout")
-          });
+        });
+        
         return <Layout {...this.props}/>
     }
 }
