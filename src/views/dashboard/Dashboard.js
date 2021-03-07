@@ -2,18 +2,25 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "redux/actions/UserActions";
 import React, { Component } from 'react';
-import { withStyles } from "@material-ui/core";
+import { withStyles, Button, Card, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
 class Dashboard extends Component {
     
-
     render() {
         return (
-            <div>
-                Welcome home
-                <div>
-                    <button onClick={() => this.props.logoutUser()}>Log out</button>
+            <div className="dashboard flex flex-center w-1000 h-100vh">
+                <div className="p-4">
+                    <Card className="landing-card position-relative y-center">
+                        <Grid container spacing={3}>
+                            <Grid item lg={8} md={8} sm={12} xs={12}>
+                                Welcome to the Dashboard
+                            </Grid>
+                            <Grid item lg={4} md={4} sm={12} xs={12}>
+                                <Button onClick={() => this.props.logoutUser()}>Log out</Button>
+                            </Grid>
+                        </Grid>
+                    </Card>
                 </div>
             </div>
         )
