@@ -2,7 +2,7 @@ import React from "react";
 import {
     Redirect
 } from "react-router-dom";
-import homeRoutes from "views/home/HomeRoutes";
+import dashboardRoutes from "views/dashboard/DashboardRoutes";
 import sessionRoutes from "views/sessions/SessionRoutes";
 
 const redirectRoute = [{
@@ -19,7 +19,7 @@ const errorRoute = [{
 
 const routes = [
     ...sessionRoutes,
-    ...homeRoutes,
+    ...dashboardRoutes,
     ...redirectRoute,
     ...errorRoute
 ];

@@ -1,16 +1,16 @@
 import { authRoles } from "auth/authRoles";
 import { GeodowLoadable } from "geodow";
 
-const Home = GeodowLoadable({
-    loader: () => import("./Home")
+const Dashboard = GeodowLoadable({
+    loader: () => import("./Dashboard")
 })
 
-const homeRoutes = [
+const dashboardRoutes = [
     {
         path: "/dashboard/home",
-        component: Home,
+        component: Dashboard,
         auth: authRoles.admin
     }
 ];
 
-export default homeRoutes;
+export default dashboardRoutes;
