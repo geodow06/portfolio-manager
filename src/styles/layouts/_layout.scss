@@ -1,0 +1,27 @@
+.content-wrap {
+  transition: all 0.3s ease;
+}
+
+.layout {
+  height: 100%;
+  .content-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    .scrollable-content {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      .content {
+        position: relative;
+      }
+      
+    }
+  }
+}
