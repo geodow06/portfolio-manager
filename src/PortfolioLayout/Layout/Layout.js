@@ -20,23 +20,32 @@ const styles = theme => {
 class Layout extends Component {
     render() {
         let { settings, classes, theme } = this.props;
-        
         let layoutClasses = {
             [classes.layout]: true,
-            [`${settings.activeLayout} theme-${theme.palette.type} flex`]: true
+            [`${settings.activeLayout} theme-${theme.palette.type} flex`]: true,
+            "topbar-fixed": settings.topbar.fixed
         };
         return (
             <AppContext.Consumer>
                 {({ routes }) => (
                     <div className={classList(layoutClasses)}>
-                        <Scrollbar className="content-wrap position-relative">
-                            <div className="scrollable-content">
-                                { settings.topbar.show && <Topbar/> }
+                        <div className="content-wrap position-relative">
+                            {/* Allow optional stationairy fixed topbar when page scrollable */}
+                            {settings.topbar.show && settings.topbar.fixed && (
+                                <Topbar className="elevation-z8"/>
+                            )}
+                            
+                            
+                            <Scrollbar className="scrollable-content">
+                                { settings.topbar.show && !settings.topbar.fixed && <Topbar/> }
                                 <div className="content">{renderRoutes(routes)}</div>
                                 <div className="my-auto" />
-                                { settings.footer.show && <Footer/> }
-                            </div>
-                        </Scrollbar>
+                                { settings.footer.show && !settings.footer.fixed && <Footer/> }
+                            </Scrollbar>
+                            
+                            {/* Allow optional stationairy fixed topbar when page scrollable */}
+                            {settings.footer.show && settings.footer.fixed && <Footer />}
+                        </div>
                     </div>
                 )}
             </AppContext.Consumer>

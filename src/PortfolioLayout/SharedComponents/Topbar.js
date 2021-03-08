@@ -5,6 +5,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { Menu, MenuItem } from "@material-ui/core";
 import userImage from "assets/images/rogers.jpg";
+import { logoutUser } from "redux/actions/UserActions";
 
 const styles = theme => ({
     root: {
@@ -27,15 +28,15 @@ class Topbar extends Component {
     }
 
     handleClick(event) {
-        this.setState({anchorEl: event.currentTarget, open: Boolean(event.currentTarget), id: "simple-popover"});
+        this.setState({anchorEl: event.currentTarget, open: Boolean(event.currentTarget)});
     }
     
     handleClose(event) {
-        this.setState({anchorEl: event.currentTarget, open: false, id: undefined});
+        this.setState({anchorEl: event.currentTarget, open: false});
     }
 
     render() {
-        let { theme, settings, className, style } = this.props;
+        let { theme, settings, className } = this.props;
         let { anchorEl, open } = this.state;
         const topbarTheme = settings.themes[settings.topbar.theme] || theme;
         return(
@@ -43,7 +44,7 @@ class Topbar extends Component {
                 <div className="topbar">
                     <div
                         className={`topbar-hold ${className}`}
-                        style={Object.assign({}, { backgroundColor: topbarTheme.palette.primary.main }, style)}>
+                        style={Object.assign({}, { backgroundColor: topbarTheme.palette.primary.main })}>
                         <div className="flex flex-space-between flex-middle h-100">                 
                             <div className="flex flex-middle">
                                 <div
@@ -75,6 +76,7 @@ class Topbar extends Component {
                                             
                                        
                                     <MenuItem 
+                                        onClick={() => this.props.logoutUser()}
                                         className="flex flex-middle"
                                         style={{ minWidth: 185 }}>
                                             <Icon> power_settings_new </Icon>
@@ -91,15 +93,20 @@ class Topbar extends Component {
 }
 
 Topbar.propTypes = {
-    settings: PropTypes.object.isRequired
+    settings: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     settings: state.layout.settings
 });
 
+const mapDispatchToProps = dispatch => ({
+    logoutUser: () => dispatch(logoutUser())
+})
+
 export default withStyles(styles, { withTheme: true })(
     withRouter(
-        connect(mapStateToProps)(Topbar)
+        connect(mapStateToProps, mapDispatchToProps)(Topbar)
     )
 );

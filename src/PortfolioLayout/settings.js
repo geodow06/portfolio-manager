@@ -16,17 +16,21 @@ function createPortfolioThemes() {
   export const PortfolioLayoutSettings = {
     activeLayout: "layout", // Choose layout configuration
     activeTheme: "blue", // Choose from range in themeColors
+    perfectScrollbar: true,
+
     themes: themes,
 
     // Footer options
     footer: {
       show: true,
+      fixed: false,
       theme: "blue"
     },
 
     // Topbar options
     topbar: {
-      show:true,
+      show: true,
+      fixed: true,
       theme: "blue"
     }
   };
