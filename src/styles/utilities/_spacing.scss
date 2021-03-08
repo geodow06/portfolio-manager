@@ -237,8 +237,9 @@ $spaces: (
 .h-100vh {
   height: 100vh;
 }
+// full viewport minus the height of the topbar and footer
 .h-100vh-80 {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 160px);
 }
 .h-500 {
   height: 500px !important;

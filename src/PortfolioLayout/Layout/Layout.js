@@ -25,7 +25,6 @@ class Layout extends Component {
             [classes.layout]: true,
             [`${settings.activeLayout} theme-${theme.palette.type} flex`]: true
         };
-        console.log(settings.topbar)
         return (
             <AppContext.Consumer>
                 {({ routes }) => (
