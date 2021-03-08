@@ -20,6 +20,7 @@ function createPortfolioThemes() {
 
     // Footer options
     footer: {
+      show: true,
       theme: "blue"
     }
   };

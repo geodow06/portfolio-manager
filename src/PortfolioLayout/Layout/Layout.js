@@ -24,7 +24,7 @@ class Layout extends Component {
             [classes.layout]: true,
             [`${settings.activeLayout} theme-${theme.palette.type} flex`]: true
         };
-
+        console.log(settings.footer)
         return (
             <AppContext.Consumer>
                 {({ routes }) => (
@@ -33,7 +33,7 @@ class Layout extends Component {
                             <div className="scrollable-content">
                                 <div className="content">{renderRoutes(routes)}</div>
                                 <div className="my-auto" />
-                                <Footer/>
+                                { settings.footer.show && <Footer/> }
                             </div>
                         </Scrollbar>
                     </div>
