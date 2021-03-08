@@ -17,4 +17,9 @@ function createPortfolioThemes() {
     activeLayout: "layout", // Choose layout configuration
     activeTheme: "blue", // Choose from range in themeColors
     themes: themes,
+
+    // Footer options
+    footer: {
+      theme: "blue"
+    }
   };

@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core";
 import { classList } from "utils";
 import { PropTypes } from "prop-types";
 import Scrollbar from "react-perfect-scrollbar";
+import Footer from "PortfolioLayout/SharedComponents/Footer";
 
 const styles = theme => {
     return {
@@ -28,12 +29,13 @@ class Layout extends Component {
             <AppContext.Consumer>
                 {({ routes }) => (
                     <div className={classList(layoutClasses)}>
-                        <div className="content-wrap position-relative">
-                            <Scrollbar className="scrollable-content">
+                        <Scrollbar className="content-wrap position-relative">
+                            <div className="scrollable-content">
                                 <div className="content">{renderRoutes(routes)}</div>
                                 <div className="my-auto" />
-                            </Scrollbar>
-                        </div>
+                                <Footer/>
+                            </div>
+                        </Scrollbar>
                     </div>
                 )}
             </AppContext.Consumer>

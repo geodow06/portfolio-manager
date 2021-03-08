@@ -9,9 +9,10 @@ class Dashboard extends Component {
     
     render() {
         return (
-            <div className="dashboard flex flex-center w-1000 h-100vh">
+            <div className="dashboard flex flex-center w-100 h-100vh-80">
                 <div className="p-4">
-                    <Card className="landing-card position-relative y-center">
+                    {/* <Card className="landing-card position-relative y-center"> */}
+                    <Card className="position-relative y-center">
                         <Grid container spacing={3}>
                             <Grid item lg={8} md={8} sm={12} xs={12}>
                                 Welcome to the Dashboard
