@@ -22,5 +22,11 @@ function createPortfolioThemes() {
     footer: {
       show: true,
       theme: "blue"
+    },
+
+    // Topbar options
+    topbar: {
+      show:true,
+      theme: "blue"
     }
   };

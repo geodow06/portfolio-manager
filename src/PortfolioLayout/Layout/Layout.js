@@ -7,6 +7,7 @@ import { classList } from "utils";
 import { PropTypes } from "prop-types";
 import Scrollbar from "react-perfect-scrollbar";
 import Footer from "PortfolioLayout/SharedComponents/Footer";
+import Topbar from "PortfolioLayout/SharedComponents/Topbar";
 
 const styles = theme => {
     return {
@@ -24,13 +25,14 @@ class Layout extends Component {
             [classes.layout]: true,
             [`${settings.activeLayout} theme-${theme.palette.type} flex`]: true
         };
-        console.log(settings.footer)
+        console.log(settings.topbar)
         return (
             <AppContext.Consumer>
                 {({ routes }) => (
                     <div className={classList(layoutClasses)}>
                         <Scrollbar className="content-wrap position-relative">
                             <div className="scrollable-content">
+                                { settings.topbar.show && <Topbar/> }
                                 <div className="content">{renderRoutes(routes)}</div>
                                 <div className="my-auto" />
                                 { settings.footer.show && <Footer/> }
