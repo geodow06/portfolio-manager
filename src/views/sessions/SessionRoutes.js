@@ -5,7 +5,12 @@ import SignIn from "./SignIn";
 // Do not show topbar on session pages
 const settings = {
   activeLayout: "layout",
+  
   topbar: {
+    show:false
+  },
+
+  sideNavbar: {
     show:false
   }
 }

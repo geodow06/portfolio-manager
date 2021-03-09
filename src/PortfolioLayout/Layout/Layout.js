@@ -8,6 +8,7 @@ import { PropTypes } from "prop-types";
 import Scrollbar from "react-perfect-scrollbar";
 import Footer from "PortfolioLayout/SharedComponents/Footer";
 import Topbar from "PortfolioLayout/SharedComponents/Topbar";
+import SideNavbar from "PortfolioLayout/SharedComponents/SideNavbar";
 
 const styles = theme => {
     return {
@@ -29,6 +30,8 @@ class Layout extends Component {
             <AppContext.Consumer>
                 {({ routes }) => (
                     <div className={classList(layoutClasses)}>
+                        {settings.sideNavbar.show && <SideNavbar/>}
+
                         <div className="content-wrap position-relative">
                             {/* Allow optional stationairy fixed topbar when page scrollable */}
                             {settings.topbar.show && settings.topbar.fixed && (
