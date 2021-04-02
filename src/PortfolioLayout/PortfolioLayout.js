@@ -10,6 +10,7 @@ import {
 } from "redux/actions/LayoutActions";
 import { isEqual, merge } from "lodash";
 import { GeodowLoadable } from "geodow";
+import { isMdScreen } from "utils";
 
 class PortfolioLayout extends Component {
     constructor(props, context) {

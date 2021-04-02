@@ -1,4 +1,5 @@
 .topbar,
+.sidenav,
 .content-wrap {
   transition: all 0.3s ease;
 }
@@ -23,6 +24,20 @@
       .content {
         position: relative;
       }
+      
+    }
+  }
+
+  // sidenav full
+  &.sidenav-full {
+    .sidenav {
+      // width: $sidenav-width;
+      left: 0;
+    }
+    .content-wrap {
+      width: calc(100% - #{$sidenav-width});
+      vertical-align: top;
+      margin-left: $sidenav-width;
       
     }
   }

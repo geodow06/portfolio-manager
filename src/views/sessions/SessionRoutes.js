@@ -5,14 +5,16 @@ import SignIn from "./SignIn";
 // Do not show topbar on session pages
 const settings = {
   activeLayout: "layout",
-  
+  // Do not show topbar on session routes
   topbar: {
     show:false
   },
-
+  // Do not show Navbar on session routes
   sideNavbar: {
-    show:false
+    show:false,
+    mode: "close"
   }
+  
 }
 
 // TODO

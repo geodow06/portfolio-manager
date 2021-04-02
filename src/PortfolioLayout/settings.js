@@ -2,7 +2,6 @@ import { createMuiTheme } from "@material-ui/core";
 import { forEach, merge } from "lodash";
 import { themeColors } from "PortfolioLayout/Theme/themeColors";
 import themeOptions from "PortfolioLayout/Theme/themeOptions";
-import SideNavBar from "./SharedComponents/SideNavbar";
 
 function createPortfolioThemes() {
     let themes = {};
@@ -35,8 +34,10 @@ function createPortfolioThemes() {
       theme: "blue"
     },
 
-    // SideNavBar options
+    // SideNav options
     sideNavbar: {
-      show: true
+      show: true,
+      mode: 'full',
+      theme: "blue",
     }
   };
