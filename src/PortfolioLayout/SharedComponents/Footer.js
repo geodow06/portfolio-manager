@@ -20,7 +20,8 @@ const Footer = ({ theme, settings }) => {
             </Helmet>
             <div className="footer flex flex-middle">
                 <div className="flex flex-middle container px-sm-30 w-100">
-                    <a href="https://github.com/geodow06/portfolio-manager">
+                    <span className="m-auto"></span>
+                    <a className="footer-link" href="https://github.com/geodow06/portfolio-manager">
                         <Button variant="contained" color="error">Github Repo</Button>
                     </a>
                 </div>
