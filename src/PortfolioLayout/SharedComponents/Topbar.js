@@ -45,7 +45,8 @@ class Topbar extends Component {
                     <div
                         className={`topbar-hold ${className}`}
                         style={Object.assign({}, { backgroundColor: topbarTheme.palette.primary.main })}>
-                        <div className="flex flex-space-between flex-middle h-100">                 
+                        <div className="flex flex-space-between flex-middle h-100">
+                            <span className="m-auto"></span>             
                             <div className="flex flex-middle">
                                 <div
                                 style={{ display: "inline-block" }}
