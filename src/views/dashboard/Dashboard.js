@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import React, { Component } from 'react';
 import { withStyles, Card, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import StatsCards from "views/dashboard/shared/StatsCards";
 
 class Dashboard extends Component {
     
@@ -11,30 +12,11 @@ class Dashboard extends Component {
 
         return (
             <div className="dashboard m-sm-30 ">
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
-                        <Grid container spacing={3} className="mb-24">
-                            <Grid item xs={12} md={6}>
-                                <Card className="stats-card p-sm-24 bg-paper" elevation={6}>
-                                    <div className="ml-12">
-                                        Portfolio Balance
-                                    </div>
-                                    <div>
-                                        amount
-                                    </div>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                            <Card className="stats-card p-sm-24 bg-paper" elevation={6}>
-                                <div className="ml-12">
-                                    24 Hour Change
-                                </div>
-                                <div>
-                                    amount
-                                </div>
-                                </Card>
-                            </Grid>
-                        </Grid>
+
+                        <StatsCards theme={theme}/>
+
                         <Card className="px-24 py-16 mb-16">
                             <div className="card-title">Assets</div>
                             Table Here
