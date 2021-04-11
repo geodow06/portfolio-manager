@@ -16,7 +16,7 @@ const AssetTableCard = () => {
         { 
             name: "Bitcoin",
             balance: { 
-                fiat: "1.00",
+                fiat: "$1.00",
                 amount: "1.00 BTC"
             },
             allocation: "10%"
@@ -24,7 +24,7 @@ const AssetTableCard = () => {
         { 
             name: "Stellar Lumens",
             balance: { 
-                fiat: "2.00",
+                fiat: "$2.00",
                 amount: "1.00 XLM"
             },
             allocation: "20%"
@@ -32,7 +32,7 @@ const AssetTableCard = () => {
         { 
             name: "Gather",
             balance: { 
-                fiat: "7.00",
+                fiat: "$7.00",
                 amount: "1.00 GTH"
             },
             allocation: "70%"
