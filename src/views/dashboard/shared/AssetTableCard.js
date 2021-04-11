@@ -33,18 +33,18 @@ const AssetTableCard = () => {
         <Card elevation={6} className="px-24 pt-20 py-16 mb-24">
             <div className="card-title ml-12">Your Assets</div>
             <div>
-                <Table>
+                <Table className="asset-table">
                     <TableHead>
-                        <TableCell>Asset</TableCell>
-                        <TableCell>Balance</TableCell>
-                        <TableCell>Allocation</TableCell>
+                        <TableCell colSpan={3}>Asset</TableCell>
+                        <TableCell colSpan={3}>Balance</TableCell>
+                        <TableCell colSpan={1}>Allocation</TableCell>
                     </TableHead>
                     <TableBody>
                         {assetList.map((asset, index) => 
                             <TableRow key={index}>
-                                <TableCell>{asset.name}</TableCell>
-                                <TableCell>{asset.balance}</TableCell>
-                                <TableCell>{asset.allocation}</TableCell>
+                                <TableCell colSpan={3}>{asset.name}</TableCell>
+                                <TableCell colSpan={3}>{asset.balance}</TableCell>
+                                <TableCell colSpan={1}>{asset.allocation}</TableCell>
                             </TableRow>
                         )}
                     </TableBody>

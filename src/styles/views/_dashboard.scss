@@ -11,3 +11,18 @@
         font-weight: bold;
     }
 }
+
+.asset-table {
+    thead {
+        th:last-of-type {
+            text-align: right;
+        }
+    }
+    tbody {
+        tr {
+            td:last-of-type {
+                text-align: right;
+            }
+        }
+    }
+}
