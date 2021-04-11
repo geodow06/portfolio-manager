@@ -7,6 +7,7 @@ import {
     TableCell, 
     TableBody 
 } from "@material-ui/core";
+import { divide } from "lodash";
 
 const AssetTableCard = () => {
 
@@ -14,17 +15,26 @@ const AssetTableCard = () => {
     const assetList = [
         { 
             name: "Bitcoin",
-            balance: "$1.00 1 BTC",
+            balance: { 
+                fiat: "1.00",
+                amount: "1.00 BTC"
+            },
             allocation: "10%"
         },
         { 
             name: "Stellar Lumens",
-            balance: "$2.00 1 XLM",
+            balance: { 
+                fiat: "2.00",
+                amount: "1.00 XLM"
+            },
             allocation: "20%"
         },
         { 
             name: "Gather",
-            balance: "$7 1 GTH",
+            balance: { 
+                fiat: "7.00",
+                amount: "1.00 GTH"
+            },
             allocation: "70%"
         },
     ];
@@ -43,7 +53,10 @@ const AssetTableCard = () => {
                         {assetList.map((asset, index) => 
                             <TableRow key={index}>
                                 <TableCell colSpan={3}>{asset.name}</TableCell>
-                                <TableCell colSpan={3}>{asset.balance}</TableCell>
+                                <TableCell colSpan={3}>
+                                    <span>{asset.balance.fiat}</span>
+                                    <span className="text-muted ml-12">{asset.balance.amount}</span>
+                                </TableCell>
                                 <TableCell colSpan={1}>{asset.allocation}</TableCell>
                             </TableRow>
                         )}
