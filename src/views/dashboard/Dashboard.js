@@ -10,10 +10,11 @@ import AssetTableCard from "./shared/AssetTableCard";
 const account = {
     total:{
         fiatValue: "1,320,091",
-        change: {
-            day:{percentage:"+30", fiatValue:"+103"},
-            hour:{percentage:"-1", fiatValue:"-3"}
-        }
+        changes: {
+            availableOptions: ["day", "hour"],
+            day:{timeFrame: "24h", text: "24 Hour Change", percentage: "+30", fiatValue: "+103"},
+            hour:{timeFrame: "1h", text: "One Hour Change", percentage: "-1", fiatValue: "-3"}
+        },
     },
     assets: [
         { 
@@ -61,7 +62,7 @@ class Dashboard extends Component {
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
 
-                        <StatsCards balance={account.total.fiatValue} change={account.total.change} theme={theme}/>
+                        <StatsCards balance={account.total.fiatValue} changes={account.total.changes} theme={theme}/>
 
                         <AssetTableCard assets={account.assets}/>
 
