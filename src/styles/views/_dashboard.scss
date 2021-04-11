@@ -20,8 +20,18 @@
     }
     tbody {
         tr {
+            td {
+                font-size: 18px;
+                padding: 16px 0px 16px 0px;
+                
+            }
             td:last-of-type {
                 text-align: right;
+            }
+        }
+        tr:last-of-type {
+            td {
+                border-bottom: none;
             }
         }
     }
