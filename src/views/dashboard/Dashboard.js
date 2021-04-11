@@ -6,6 +6,51 @@ import { withRouter } from "react-router-dom";
 import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
 
+// Dummy account service response data
+const account = {
+    total:{
+        fiatValue: "1,320,091",
+        change: {
+            day:{percentage:"+30", fiatValue:"+103"},
+            hour:{percentage:"-1", fiatValue:"-3"}
+        }
+    },
+    assets: [
+        { 
+            name: "Bitcoin",
+            balance: { 
+                fiat: "$1.00",
+                amount: "1.00 BTC"
+            },
+            allocation: "10"
+        },
+        { 
+            name: "Stellar Lumens",
+            balance: { 
+                fiat: "$2.00",
+                amount: "1.00 XLM"
+            },
+            allocation: "20"
+        },
+        { 
+            name: "Gather",
+            balance: { 
+                fiat: "$7.00",
+                amount: "1.00 GTH"
+            },
+            allocation: "70"
+        },
+        {
+            name: "Chainlink",
+            balance: {
+                fiat: "$0.00",
+                amount: "0.00 LINK"
+            },
+            allocation: "0"
+        }
+    ]
+}
+
 class Dashboard extends Component {
     
     render() {
@@ -16,9 +61,9 @@ class Dashboard extends Component {
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
 
-                        <StatsCards theme={theme}/>
+                        <StatsCards balance={account.total.fiatValue} change={account.total.change} theme={theme}/>
 
-                        <AssetTableCard/>
+                        <AssetTableCard assets={account.assets}/>
 
                     </Grid>
                     <Grid item lg={4} md={4} sm={12} xs={12}>

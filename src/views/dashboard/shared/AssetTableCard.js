@@ -8,43 +8,7 @@ import {
     TableBody 
 } from "@material-ui/core";
 
-const AssetTableCard = () => {
-
-    // TODO get portfolio assets from API
-    const assetList = [
-        { 
-            name: "Bitcoin",
-            balance: { 
-                fiat: "$1.00",
-                amount: "1.00 BTC"
-            },
-            allocation: "10"
-        },
-        { 
-            name: "Stellar Lumens",
-            balance: { 
-                fiat: "$2.00",
-                amount: "1.00 XLM"
-            },
-            allocation: "20"
-        },
-        { 
-            name: "Gather",
-            balance: { 
-                fiat: "$7.00",
-                amount: "1.00 GTH"
-            },
-            allocation: "70"
-        },
-        {
-            name: "Chainlink",
-            balance: {
-                fiat: "$0.00",
-                amount: "0.00 LINK"
-            },
-            allocation: "0"
-        }
-    ];
+const AssetTableCard = ({assets}) => {
 
     return(
         <Card elevation={6} className="pt-20 mb-24">
@@ -57,7 +21,7 @@ const AssetTableCard = () => {
                         <TableCell className="px-24" align="right" colSpan={1}>Allocation</TableCell>
                     </TableHead>
                     <TableBody>
-                        {assetList
+                        {assets
                             .sort((a,b) => parseInt(b.allocation) - parseInt(a.allocation))
                                 .map((asset, index) => 
                             <TableRow key={index}>

@@ -1,3 +1,8 @@
+$change-colors: (
+    green: green,
+    red: red
+);
+
 .dashboard {
     .stats-card {
         display: flex;
@@ -5,6 +10,13 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        font-size: 16px;
+
+        @each $name, $value in $change-colors {
+            .change-#{$value} {
+                color: $value !important;
+            }
+        }
     }
     .card-title {
         font-size: 16px;

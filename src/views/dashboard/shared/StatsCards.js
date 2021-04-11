@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Card } from "@material-ui/core";
 
-const StatsCards = ({theme}) => {
+const StatsCards = ({balance, change, theme}) => {
     return (
         <Grid container spacing={3} className="mb-24">
             <Grid item xs={12} md={6}>
@@ -10,7 +10,7 @@ const StatsCards = ({theme}) => {
                         Portfolio Balance
                     </div>
                     <div>
-                        amount
+                        ${balance}
                     </div>
                 </Card>
             </Grid>
@@ -19,8 +19,8 @@ const StatsCards = ({theme}) => {
                 <div className="card-title ml-12">
                     24 Hour Change
                 </div>
-                <div>
-                    amount
+                <div className={change.day.percentage > 0 ? "change-green" : "change-red"}>
+                    {change.day.percentage}%
                 </div>
                 </Card>
             </Grid>
