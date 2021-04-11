@@ -40,14 +40,14 @@ const AssetTableCard = () => {
     ];
 
     return(
-        <Card elevation={6} className="px-24 pt-20 py-16 mb-24">
-            <div className="card-title ml-12">Your Assets</div>
+        <Card elevation={6} className="pt-20 mb-24">
+            <div className="card-title px-24 ml-12">Your Assets</div>
             <div>
                 <Table className="asset-table">
                     <TableHead>
-                        <TableCell colSpan={3}>Asset</TableCell>
+                        <TableCell className="px-24" colSpan={3}>Asset</TableCell>
                         <TableCell colSpan={3}>Balance</TableCell>
-                        <TableCell colSpan={1}>Allocation</TableCell>
+                        <TableCell className="px-24" align="right" colSpan={1}>Allocation</TableCell>
                     </TableHead>
                     <TableBody>
                         {assetList.map((asset, index) => 
@@ -57,7 +57,7 @@ const AssetTableCard = () => {
                                     <span>{asset.balance.fiat}</span>
                                     <span className="text-muted ml-12">{asset.balance.amount}</span>
                                 </TableCell>
-                                <TableCell colSpan={1}>{asset.allocation}</TableCell>
+                                <TableCell className="px-24" align="right" colSpan={1}>{asset.allocation}</TableCell>
                             </TableRow>
                         )}
                     </TableBody>
