@@ -13,8 +13,11 @@ const settings = {
   sideNavbar: {
     show:false,
     mode: "close"
+  },
+  // Do not show footer on session routes
+  footer: {
+    show: false
   }
-  
 }
 
 // TODO

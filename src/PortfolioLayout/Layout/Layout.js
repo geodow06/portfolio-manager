@@ -38,13 +38,25 @@ class Layout extends Component {
                             {settings.topbar.show && settings.topbar.fixed && (
                                 <Topbar className="elevation-z8"/>
                             )}
-                            
-                            <Scrollbar className="scrollable-content">
-                                { settings.topbar.show && !settings.topbar.fixed && <Topbar/> }
-                                <div className="content">{renderRoutes(routes)}</div>
-                                <div className="my-auto" />
-                                { settings.footer.show && !settings.footer.fixed && <Footer/> }
-                            </Scrollbar>
+
+                            {settings.perfectScrollbar && (
+                                <Scrollbar className="scrollable-content">
+                                    { settings.topbar.show && !settings.topbar.fixed && <Topbar/> }
+                                    <div className="content">{renderRoutes(routes)}</div>
+                                    <div className="my-auto" />
+                                    { settings.footer.show && !settings.footer.fixed && <Footer/> }
+                                </Scrollbar>
+                            )}
+
+                            {!settings.perfectScrollbar && (
+                                <div className="scrollable-content">
+                                    {settings.topbar.show &&
+                                        !settings.topbar.fixed && <Topbar />}
+                                    <div className="content">{renderRoutes(routes)}</div>
+                                    <div className="my-auto" />
+                                    {settings.footer.show && !settings.footer.fixed && <Footer />}
+                                </div>
+                            )}
                             
                             {/* Allow optional stationairy fixed topbar when page scrollable */}
                             {settings.footer.show && settings.footer.fixed && <Footer />}
