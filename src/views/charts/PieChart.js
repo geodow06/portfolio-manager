@@ -3,12 +3,21 @@ import ReactEcharts from "echarts-for-react";
 
 const PieChart = ({chartName, data}) => {
 
+    const removeEmptyData = () => {
+        let filteredArray = data.filter((object) => {
+            return object.value !== "0"
+        })
+
+        return filteredArray;
+    }
+
+    
     const option = {
         series: [
             {
                 name: chartName,
                 type: "pie",
-                data: data
+                data: removeEmptyData()
             }
         ]
     }
