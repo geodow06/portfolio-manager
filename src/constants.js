@@ -1,2 +1,5 @@
-export const INCREASE = 'INCREASE'
-export const DECREASE = 'DECREASE'
+export const ECHART_DEFAULT_COLOR_PALETTE = [
+    '#5470c6', '#91cc75', '#fac858', 
+    '#ee6666', '#73c0de', '#3ba272', 
+    '#fc8452', '#9a60b4', '#ea7ccc'
+];

@@ -25,7 +25,8 @@ const account = {
                 fiat: "$1.00",
                 amount: "1.00"
             },
-            allocation: "10"
+            allocation: "10",
+            color: "#F2A900"
         },
         { 
             name: "Stellar Lumens",
@@ -34,7 +35,8 @@ const account = {
                 fiat: "$2.00",
                 amount: "1.00"
             },
-            allocation: "20"
+            allocation: "20",
+            color: "#2a2a2a"
         },
         { 
             name: "Gather",
@@ -43,7 +45,8 @@ const account = {
                 fiat: "$7.00",
                 amount: "1.00"
             },
-            allocation: "70"
+            allocation: "70",
+            color: "#6610f2"
         },
         {
             name: "Chainlink",
@@ -52,7 +55,8 @@ const account = {
                 fiat: "$0.00",
                 amount: "0.00"
             },
-            allocation: "0"
+            allocation: "0",
+            color: "#007bff"
         }
     ]
 }
@@ -62,7 +66,7 @@ class Dashboard extends Component {
     generateChartData = (assets) => {
 
         const allocationData = assets.map(asset => {
-            return { name:asset.ticker, value: asset.allocation }
+            return { name:asset.ticker, value: asset.allocation, color: asset.color }
         });
 
         return allocationData;
