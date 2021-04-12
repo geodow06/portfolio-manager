@@ -58,7 +58,7 @@ const account = {
 }
 
 class Dashboard extends Component {
-    
+
     generateChartData = (assets) => {
 
         const allocationData = assets.map(asset => {
@@ -66,7 +66,7 @@ class Dashboard extends Component {
         });
 
         return allocationData;
-    }
+    };
 
     render() {
         let { theme } = this.props;
@@ -84,7 +84,7 @@ class Dashboard extends Component {
                     <Grid item lg={4} md={4} sm={12} xs={12}>
                         <Card elevation={6} className="px-24 py-16 mb-16">
                             <div className="card-title">Breakdown</div>
-                            <PieChart chartName={"Breakdown"} data={data}/>
+                            <PieChart chartName={"Breakdown"} data={data} theme={theme}/>
                         </Card>
                     </Grid>
                 </Grid>
