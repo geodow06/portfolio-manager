@@ -28,6 +28,8 @@ const PieChart = ({chartName, data, theme, usePreferredColors=true}) => {
         return ECHART_DEFAULT_COLOR_PALETTE[i%9];
     }
 
+    const colorPalette = usePreferredColors ? assignColors() : ECHART_DEFAULT_COLOR_PALETTE
+
     const option = {
         tooltip: {
             show: true,
@@ -38,7 +40,7 @@ const PieChart = ({chartName, data, theme, usePreferredColors=true}) => {
             {
                 name: chartName,
                 type: "pie",
-                color: usePreferredColors ? assignColors() : ECHART_DEFAULT_COLOR_PALETTE,
+                color: colorPalette,
                 data: removeEmptyData(),
                 labelLine: {
                     normal: {
