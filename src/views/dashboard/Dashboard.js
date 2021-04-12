@@ -5,6 +5,7 @@ import { withStyles, Card, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
+import ReactEcharts from "echarts-for-react";
 
 // Dummy account service response data
 const account = {
@@ -52,6 +53,29 @@ const account = {
     ]
 }
 
+const option = {
+    series: [
+        {
+            name: "Breakdown",
+            type: "pie",
+            data: [
+                {
+                  value: 70,
+                  name: "GTH"
+                },
+                {
+                  value: 20,
+                  name: "XLM"
+                },
+                { 
+                  value: 10,
+                  name: "BTC" 
+                }
+              ],
+        }
+    ]
+}
+
 class Dashboard extends Component {
     
     render() {
@@ -70,7 +94,10 @@ class Dashboard extends Component {
                     <Grid item lg={4} md={4} sm={12} xs={12}>
                         <Card elevation={6} className="px-24 py-16 mb-16">
                             <div className="card-title">Breakdown</div>
-                            Pie chart here
+                            <ReactEcharts
+                                style={{ height: "200px"}}
+                                option={{...option}}
+                            />
                         </Card>
                     </Grid>
                 </Grid>
