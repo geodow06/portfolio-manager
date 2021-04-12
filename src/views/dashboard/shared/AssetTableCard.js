@@ -28,7 +28,7 @@ const AssetTableCard = ({assets}) => {
                                 <TableCell colSpan={3}>{asset.name}</TableCell>
                                 <TableCell colSpan={3}>
                                     <span>{asset.balance.fiat}</span>
-                                    <span className="text-muted ml-12">{asset.balance.amount}</span>
+                                    <span className="text-muted ml-12">{asset.balance.amount} {asset.ticker}</span>
                                 </TableCell>
                                 <TableCell className="px-24" align="right" colSpan={1}>{asset.allocation}%</TableCell>
                             </TableRow>

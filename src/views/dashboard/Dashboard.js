@@ -5,7 +5,7 @@ import { withStyles, Card, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
-import ReactEcharts from "echarts-for-react";
+import PieChart from "views/charts/PieChart";
 
 // Dummy account service response data
 const account = {
@@ -20,67 +20,57 @@ const account = {
     assets: [
         { 
             name: "Bitcoin",
+            ticker: "BTC",
             balance: { 
                 fiat: "$1.00",
-                amount: "1.00 BTC"
+                amount: "1.00"
             },
             allocation: "10"
         },
         { 
             name: "Stellar Lumens",
+            ticker: "XLM",
             balance: { 
                 fiat: "$2.00",
-                amount: "1.00 XLM"
+                amount: "1.00"
             },
             allocation: "20"
         },
         { 
             name: "Gather",
+            ticker: "GTH",
             balance: { 
                 fiat: "$7.00",
-                amount: "1.00 GTH"
+                amount: "1.00"
             },
             allocation: "70"
         },
         {
             name: "Chainlink",
+            ticker: "LINK",
             balance: {
                 fiat: "$0.00",
-                amount: "0.00 LINK"
+                amount: "0.00"
             },
             allocation: "0"
         }
     ]
 }
 
-const option = {
-    series: [
-        {
-            name: "Breakdown",
-            type: "pie",
-            data: [
-                {
-                  value: 70,
-                  name: "GTH"
-                },
-                {
-                  value: 20,
-                  name: "XLM"
-                },
-                { 
-                  value: 10,
-                  name: "BTC" 
-                }
-              ],
-        }
-    ]
-}
-
 class Dashboard extends Component {
     
+    generateChartData = (assets) => {
+
+        const allocationData = assets.map(asset => {
+            return { name:asset.ticker, value: asset.allocation }
+        });
+
+        return allocationData;
+    }
+
     render() {
         let { theme } = this.props;
-
+        let data = this.generateChartData(account.assets);
         return (
             <div className="dashboard m-sm-30 ">
                 <Grid container spacing={3}>
@@ -94,10 +84,7 @@ class Dashboard extends Component {
                     <Grid item lg={4} md={4} sm={12} xs={12}>
                         <Card elevation={6} className="px-24 py-16 mb-16">
                             <div className="card-title">Breakdown</div>
-                            <ReactEcharts
-                                style={{ height: "200px"}}
-                                option={{...option}}
-                            />
+                            <PieChart chartName={"Breakdown"} data={data}/>
                         </Card>
                     </Grid>
                 </Grid>
