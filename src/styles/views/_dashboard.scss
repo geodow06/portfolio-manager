@@ -11,7 +11,7 @@ $change-colors: (
         justify-content: space-between;
         align-items: center;
         font-size: 16px;
-
+        height: 80px;
         @each $name, $value in $change-colors {
             .change-#{$value} {
                 color: $value !important;

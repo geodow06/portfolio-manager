@@ -23,8 +23,9 @@ class ChangeCard extends Component {
         return(
             <Card className="stats-card p-sm-24 bg-paper" elevation={6}>
                 <div className="card-title ml-12">
-                    {changes[selectedOption].text}
+                    Porftolio Change
                 </div>
+                <div className="mx-auto"></div>
                 <div className={changes[selectedOption].percentage > 0 ? "change-green" : "change-red"}>
                     {changes[selectedOption].percentage}%
                 </div>
