@@ -3,7 +3,7 @@ import ReactEcharts from "echarts-for-react";
 import { withStyles } from "@material-ui/styles";
 import { ECHART_DEFAULT_COLOR_PALETTE }  from "constants.js";
 
-const PieChart = ({chartName, data, theme, usePreferredColors=true}) => {
+const PieChart = ({data, theme, usePreferredColors=true, customRadius=["100%"], customLabel}) => {
     
     const removeEmptyData = () => {
         let filteredArray = data.filter((object) => {
@@ -34,19 +34,32 @@ const PieChart = ({chartName, data, theme, usePreferredColors=true}) => {
         tooltip: {
             show: true,
             trigger: "item",
+            // position:"inside",
+            position: function (pos, params, dom, rect, size) {
+                // Tooltip will move to closest corner of chart
+                let position = {
+                    ...(pos[0] > size.viewSize[0] / 2 ? { right: 5 } : { left: 5 }),
+                    ...(pos[1] < size.viewSize[1] / 2 ? { top: 20 } : { bottom: 5 })
+                };
+                return position
+                // return position;
+            },
             formatter: "{b}: ({d}%)"
         },
         series: [
             {
-                name: chartName,
                 type: "pie",
+                radius: customRadius,
+                center: ["50%", "50%"],
                 color: colorPalette,
                 data: removeEmptyData(),
+                avoidLabelOverlap: true,
                 labelLine: {
                     normal: {
                       show: false
                     }
                 },
+                label : customLabel,
                 itemStyle: {
                     emphasis: {
                       shadowBlur: 5,
