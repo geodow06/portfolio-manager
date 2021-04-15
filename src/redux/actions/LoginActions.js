@@ -1,6 +1,7 @@
 import { setUserData } from "redux/actions/UserActions";
 import authService from "services/authService";
 import { push } from "connected-react-router";
+import { setAccountData } from "./AccountActions";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_LOADING = "LOGIN_LOADING";
@@ -17,6 +18,8 @@ export function loginWithUsernameAndPassword({ username, password }) {
             dispatch(setUserData(user));
 
             dispatch(push({ pathname: "/"}));
+
+            dispatch(setAccountData());
 
             return dispatch({
                 type: LOGIN_SUCCESS

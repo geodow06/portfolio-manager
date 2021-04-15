@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { loginWithUsernameAndPassword } from "redux/actions/LoginActions";
+import { setAccountData } from "redux/actions/AccountActions";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
+import { logoutUser } from "redux/actions/UserActions";
 
 const styles = theme => ({
     wrapper: {
@@ -36,7 +38,8 @@ class SignIn extends Component {
     };
 
     handleSubmit = event => {
-        this.props.loginWithUsernameAndPassword({ ...this.state })
+        this.props.loginWithUsernameAndPassword({ ...this.state });
+        // this.props.setAccountData({ ...this.state });
     };
 
     render() {
@@ -114,11 +117,19 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
     login: PropTypes.object.isRequired,
-    loginWithUsernameAndPassword: PropTypes.func.isRequired
+    loginWithUsernameAndPassword: PropTypes.func.isRequired,
+    setAccountData: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-    login: state.login
+    login: state.login,
 });
 
-export default withStyles(styles, {withTheme: true})(withRouter(connect(mapStateToProps,{ loginWithUsernameAndPassword })(SignIn)));
+const mapDispatchToProps = dispatch => ({
+    loginWithUsernameAndPassword: state => dispatch(loginWithUsernameAndPassword({...state})),
+    setAccountData: () => dispatch(setAccountData())
+
+});
+
+
+export default withStyles(styles, {withTheme: true})(withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn)));
