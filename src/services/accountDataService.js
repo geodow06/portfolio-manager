@@ -1,3 +1,5 @@
+import localStorageService from "./localStorageService";
+
 class AccountService {
     
     // Mock account data response
@@ -55,10 +57,24 @@ class AccountService {
         ]
     }
 
-    getAccountData = (user) => {
+    getAccountData = () => {
+        let sessionData = localStorageService.getItem("data")
+        if (sessionData) {
+            return sessionData;
+        }
+        
         // API Call retrieves data
-        console.log("e")
         return this.account;
+    }
+
+    // Set Session Account Data in local storage to persist through refresh 
+    setSessionAccountData = data => {
+        localStorageService.setItem("data", data);
+    }
+
+    // Remove Session Account Data from local storage
+    removeSessionAccountData = () => {
+        localStorage.removeItem("data")
     }
 }
 

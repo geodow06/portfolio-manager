@@ -1,8 +1,9 @@
 import { SET_ACCOUNT_DATA } from "redux/actions/AccountActions";
 
-const initialState ={};
+const initialState = {};
 
 const AccountReducer = (state = initialState, action) => {
+    
     if (action.type === SET_ACCOUNT_DATA) {
         return {
             ...state,

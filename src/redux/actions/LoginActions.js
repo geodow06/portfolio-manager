@@ -14,12 +14,16 @@ export function loginWithUsernameAndPassword({ username, password }) {
 
         try {
             let user = authService.loginWithUsernameAndPassword(username, password);
-            
+         
+            // Upons successful login set user details in state and local storage
             dispatch(setUserData(user));
-
-            dispatch(push({ pathname: "/"}));
-
+            
+            // Upon SUCCESSFUL login get and set the users account data
+            // Both in state and localstorage
             dispatch(setAccountData());
+
+            // Redirect to home on successful login
+            dispatch(push({ pathname: "/"}));
 
             return dispatch({
                 type: LOGIN_SUCCESS

@@ -1,5 +1,6 @@
 import authService from "services/authService";
 import { push } from "connected-react-router";
+import accountDataService from "services/accountDataService";
 
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -17,7 +18,7 @@ export function setUserData(user) {
 export function logoutUser() {
     return dispatch => {
         authService.logout();
-
+        accountDataService.removeSessionAccountData();
         dispatch(push({pathname: "/session/signin"}));
 
         dispatch({
