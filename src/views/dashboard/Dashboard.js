@@ -7,46 +7,36 @@ import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
 import BreakdownChartCard from "./shared/BreakdownChartCard";
 
+// let socket = ""
+
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            coinbaseData: ""
+        }
+    }
+    socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
 
     componentDidMount = () => {
-        this.priceWebSocket();
-    }
-
-    priceWebSocket = () => {
-        console.log("Websocket")
-        let socket = new WebSocket("wss://ws-feed.pro.coinbase.com");
         let subscribe = {
             type: "subscribe",
-            product_ids: [
-                "ETH-USD",
-                "ETH-EUR"
-            ],
-            channels: [
-                "level2",
-                "heartbeat",
-                {
-                    name: "ticker",
-                    product_ids: [
-                        "ETH-BTC",
-                        "ETH-USD"
-                    ]
-                }
-            ]
-        }
+            "channels": [{ name: "ticker", product_ids: ["BTC-GBP"] }]
+        };
 
-        socket.onopen = function(e) {
+        this.socket.onopen = e => {
             console.log("[open] Connection established");
             console.log("Sending to server");
-            socket.send(JSON.stringify(subscribe));
+            this.socket.send(JSON.stringify(subscribe));
         };
 
-        socket.onmessage = function(event) {
+        this.socket.onmessage = event => {
             console.log(`[message] Data received from server: ${event.data}`);
+            const message = JSON.parse(event.data);
+            this.setState({coinbaseData: message});
         };
-          
-        socket.onclose = function(event) {
-        
+
+        this.socket.onclose = event => {
             if (event.wasClean) {
               console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
             } else {
@@ -56,19 +46,27 @@ class Dashboard extends Component {
             }
         };
 
-        socket.onerror = function(error) {
+        this.socket.onerror = error => {
             console.log(`[error] ${error.message}`);
         };
+    }
 
-        setTimeout(10000)
-        socket.close(1000, "Work complete");
+    componentWillUnmount = () => {
+        this.socket.close(1000, "STOP")
+    }
 
+    handleOnClick = () => {
+        console.log("Attempting to stop")
+        this.socket.close(1000, "STOP")
     }
 
     render() {
+        let { coinbaseData } = this.state;
         let { theme, account } = this.props;
         return (
             <div className="dashboard m-sm-30 ">
+                <button onClick={this.handleOnClick}>STOP THE WEBSOCKET</button>
+                <div>Bitcoin price - {coinbaseData.price ? coinbaseData.price : "Loading"}</div>
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <StatsCards balance={account.total.fiatValue.usd} changes={account.total.changes} theme={theme}/>
