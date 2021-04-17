@@ -8,8 +8,7 @@ import {
     TableBody 
 } from "@material-ui/core";
 
-const AssetTableCard = ({assets}) => {
-
+const AssetTableCard = (props) => {
     return(
         <Card elevation={6} className="pt-20 mb-24">
             <div className="card-title px-24 ml-12">Your Assets</div>
@@ -21,13 +20,13 @@ const AssetTableCard = ({assets}) => {
                         <TableCell className="px-24" align="right" colSpan={1}>Allocation</TableCell>
                     </TableHead>
                     <TableBody>
-                        {assets
+                        {props.assets
                             .sort((a,b) => parseInt(b.allocation) - parseInt(a.allocation))
                                 .map((asset, index) => 
                             <TableRow key={index}>
                                 <TableCell colSpan={3}>{asset.name}</TableCell>
                                 <TableCell colSpan={3}>
-                                    <span>{asset.balance.fiat}</span>
+                                    <span>{asset.balance.amount*props.priceData.price}</span>
                                     <span className="text-muted ml-12">{asset.balance.amount} {asset.ticker}</span>
                                 </TableCell>
                                 <TableCell className="px-24" align="right" colSpan={1}>{asset.allocation}%</TableCell>

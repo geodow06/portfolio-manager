@@ -63,15 +63,15 @@ class Dashboard extends Component {
     render() {
         let { coinbaseData } = this.state;
         let { theme, account } = this.props;
+        let assets = account.assets;
         return (
             <div className="dashboard m-sm-30 ">
                 <button onClick={this.handleOnClick}>STOP THE WEBSOCKET</button>
-                <div>Bitcoin price - {coinbaseData.price ? coinbaseData.price : "Loading"}</div>
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <StatsCards balance={account.total.fiatValue.usd} changes={account.total.changes} theme={theme}/>
 
-                        <AssetTableCard assets={account.assets}/>
+                        {coinbaseData!==""? <AssetTableCard assets={assets} priceData={coinbaseData}/>: <div>loading</div>}
 
                     </Grid>
                     <Grid item lg={4} md={4} sm={12} xs={12}>
