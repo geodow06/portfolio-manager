@@ -15,16 +15,6 @@ const styles = theme => ({
 });
 
 class Topbar extends Component {
-    
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            anchorEl: null,
-            open: false
-        }
-    }
-
     render() {
         let { theme, settings, className } = this.props;
         const topbarTheme = settings.themes[settings.topbar.theme] || theme;
