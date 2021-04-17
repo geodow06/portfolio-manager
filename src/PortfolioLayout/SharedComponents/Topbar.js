@@ -3,9 +3,10 @@ import { Icon, MuiThemeProvider, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import { Menu, MenuItem } from "@material-ui/core";
+import { MenuItem } from "@material-ui/core";
 import userImage from "assets/images/rogers.jpg";
 import { logoutUser } from "redux/actions/UserActions";
+import GeodowMenu from "geodow/components/GeodowMenu";
 
 const styles = theme => ({
     root: {
@@ -22,22 +23,10 @@ class Topbar extends Component {
             anchorEl: null,
             open: false
         }
-
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-    }
-
-    handleClick(event) {
-        this.setState({anchorEl: event.currentTarget, open: Boolean(event.currentTarget)});
-    }
-    
-    handleClose(event) {
-        this.setState({anchorEl: event.currentTarget, open: false});
     }
 
     render() {
         let { theme, settings, className } = this.props;
-        let { anchorEl, open } = this.state;
         const topbarTheme = settings.themes[settings.topbar.theme] || theme;
         return(
             <MuiThemeProvider theme={topbarTheme}>
@@ -48,34 +37,15 @@ class Topbar extends Component {
                         <div className="flex flex-space-between flex-middle h-100">
                             <span className="m-auto"></span>             
                             <div className="flex flex-middle">
-                                <div
-                                style={{ display: "inline-block" }}
-                                aria-owns={anchorEl ? "simple-menu" : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleClick}
-                                >
-                                    <img
-                                        className="mx-8 text-middle circular-image-small cursor-pointer"
-                                        src={userImage}
-                                        alt="user"
-                                    />
-                                </div>
-                                <Menu 
-                                    elevation={8}
-                                    getContentAnchorEl={null}
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left"
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left"
-                                    }}>
-                                            
-                                       
+                                <GeodowMenu
+                                    menuButton = {
+                                        <img
+                                            className="mx-8 text-middle circular-image-small cursor-pointer"
+                                            src={userImage}
+                                            alt="user"
+                                        />
+                                    }
+                                >    
                                     <MenuItem 
                                         onClick={() => this.props.logoutUser()}
                                         className="flex flex-middle"
@@ -83,7 +53,7 @@ class Topbar extends Component {
                                             <Icon> power_settings_new </Icon>
                                             <span className="pl-16"> Logout </span>
                                     </MenuItem>
-                                </Menu>
+                                </GeodowMenu>
                             </div>
                         </div>
                     </div>
