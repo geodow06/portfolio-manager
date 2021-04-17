@@ -2,8 +2,7 @@ import React, { Component, Fragment } from "react";
 import { PropTypes } from "prop-types";
 import { 
     MuiThemeProvider,
-    withStyles, 
-    Menu, 
+    withStyles,
     MenuItem, 
     Icon,
 } from "@material-ui/core";
@@ -14,29 +13,13 @@ import SideNavTheme from "PortfolioLayout/Theme/SideNavTheme";
 import { setLayoutSettings, setDefaultSettings } from "redux/actions/LayoutActions";
 import { logoutUser } from "redux/actions/UserActions";
 import Brand from "PortfolioLayout/SharedComponents/Brand";
+import GeodowMenu from "geodow/components/GeodowMenu";
 
 const styles = theme => ({});
 
 class LayoutSideNavbar extends Component {
-    // TODO extract Menu to seperate component
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            anchorEl: null,
-            open: false,
-        }
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(event) {
-        this.setState({anchorEl: event.currentTarget, open: Boolean(event.currentTarget)});
-    }
-    
     render() {
         let { theme, settings } = this.props;
-        let { anchorEl, open } = this.state;
         const sideNavTheme = 
             settings.themes[settings.sideNavbar.theme] || theme;
         return(
@@ -48,21 +31,7 @@ class LayoutSideNavbar extends Component {
                             <Brand />
                             <div className="mt-12"></div>
                             <SideNav >
-                                <Menu 
-                                    elevation={8}
-                                    getContentAnchorEl={null}
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                    anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "left"
-                                    }}
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "left"
-                                    }}>
-                                             
+                                <GeodowMenu> 
                                     <MenuItem 
                                         onClick={() => this.props.logoutUser()}
                                         className="flex flex-middle"
@@ -78,7 +47,7 @@ class LayoutSideNavbar extends Component {
                                         <Icon> settings </Icon>
                                         <span className="pl-16"> Account Setting </span>
                                     </MenuItem>
-                                </Menu>
+                                </GeodowMenu>
                             </SideNav>
                         </Fragment>)}
                     </div>
