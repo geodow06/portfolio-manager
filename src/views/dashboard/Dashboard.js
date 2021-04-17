@@ -9,6 +9,62 @@ import BreakdownChartCard from "./shared/BreakdownChartCard";
 
 class Dashboard extends Component {
 
+    componentDidMount = () => {
+        this.priceWebSocket();
+    }
+
+    priceWebSocket = () => {
+        console.log("Websocket")
+        let socket = new WebSocket("wss://ws-feed.pro.coinbase.com");
+        let subscribe = {
+            type: "subscribe",
+            product_ids: [
+                "ETH-USD",
+                "ETH-EUR"
+            ],
+            channels: [
+                "level2",
+                "heartbeat",
+                {
+                    name: "ticker",
+                    product_ids: [
+                        "ETH-BTC",
+                        "ETH-USD"
+                    ]
+                }
+            ]
+        }
+
+        socket.onopen = function(e) {
+            console.log("[open] Connection established");
+            console.log("Sending to server");
+            socket.send(JSON.stringify(subscribe));
+        };
+
+        socket.onmessage = function(event) {
+            console.log(`[message] Data received from server: ${event.data}`);
+        };
+          
+        socket.onclose = function(event) {
+        
+            if (event.wasClean) {
+              console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            } else {
+                // e.g. server process killed or network down
+                // event.code is usually 1006 in this case
+                console.log('[close] Connection died');
+            }
+        };
+
+        socket.onerror = function(error) {
+            console.log(`[error] ${error.message}`);
+        };
+
+        setTimeout(10000)
+        socket.close(1000, "Work complete");
+
+    }
+
     render() {
         let { theme, account } = this.props;
         return (
