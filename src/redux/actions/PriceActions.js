@@ -3,18 +3,14 @@ export const SET_PRICES_LOADING = "SET_PRICES_LOADING";
 export const SET_PRICES_SUCCESS = "SET_PRICES_SUCCESS";
 export const SET_PRICES_ERROR = "SET_PRICES_ERROR";
 
-export const setPrices = () => {
+export const setPrices = (prices = {}) => {
     return dispatch => {
-
+        console.log(prices)
         dispatch({
             type: SET_PRICES_LOADING
         });
 
         try {
-
-            // Return from prices service
-            const prices = {}
-
             dispatch({
                 type: SET_PRICES,
                 payload: prices

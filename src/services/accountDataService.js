@@ -67,6 +67,19 @@ class AccountService {
         return this.account;
     }
 
+    getCoinbaseProductIds = () => {
+        // Filter for empty values
+        // Then map each non zero asset to coinbase friendly ticker
+        // TODO Based on user preferred currency
+        const productIds = this.account.assets.filter((asset) => {
+            return parseFloat(asset.balance.amount);
+        }).map((asset) => {
+            return `${asset.ticker}-USD`;
+        })
+        console.log(productIds);
+        return productIds;
+    }
+
     // Set Session Account Data in local storage to persist through refresh 
     setSessionAccountData = data => {
         localStorageService.setItem("data", data);

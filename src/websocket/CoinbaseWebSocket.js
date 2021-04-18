@@ -5,43 +5,35 @@ class CoinbaseWebSocket {
             this.productIds = productIds;
             this.channel = channel;
             this.tickerPrices = {};
-            this.isOpen = false;
-            this.connectionFailed = false;
+            this.isConnected= false;
+        }
+
+        isConnected = () => {
+            return this.isConnected;
         }
 
         getTickerPrices = () => {
             return this.tickerPrices;
         }
 
-        isOpen = () => {
-            return this.isOpen;
-        }
-
-        connectionFailed = () => {
-            return this.connectionFailed
-        }
-
         connect = () => {
             console.log("Connecting...")
             const subscribe = {
-                
                 type: "subscribe",
-                "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
-                // type: "subscribe",
-                // "channels": [{ name: this.channel, product_ids: this.productIds }]
+                "channels": [{ name: this.channel, product_ids: this.productIds }]
             };
 
-            console.log(subscribe);
+            
 
             this.socket.onopen = e => {
                 console.log("[open] Connection established with Coinbase");
-                this.isOpen = true;
+                this.isConnected = true;
                 console.log("Sending subscribe message to Coinbase server");
                 this.socket.send(JSON.stringify(subscribe));
             };
     
             this.socket.onmessage = event => {
-                console.log(`[message] Data received from server: ${event.data}`);
+                // console.log(`[message] Data received from server: ${event.data}`);
                 const message = JSON.parse(event.data);
                 let tickerPrice = {};
                 if (message.price) {
@@ -66,7 +58,7 @@ class CoinbaseWebSocket {
     
             this.socket.onerror = error => {
                 console.log(`[error] ${error.message}`);
-                this.connectionFailed = true;
+                this.isConnected = false;
             };
         }
         

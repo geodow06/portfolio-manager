@@ -6,85 +6,42 @@ import { withRouter } from "react-router-dom";
 import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
 import BreakdownChartCard from "./shared/BreakdownChartCard";
-import pricesService from "services/pricesService";
+import CoinbaseWebSocket from "websocket/CoinbaseWebSocket";
+import { setPrices } from "redux/actions/PriceActions";
+import accountDataService from "services/accountDataService";
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            coinbaseData: {},
-            tickerPrices: {}
-        }
-    }
-    socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
+
+    socket = {};
 
     componentDidMount = () => {
-        // console.log("Dashboard Did mount")
-        const productIds = [ "BTC-USD","LINK-USD","XLM-USD"];
-        pricesService.getLiveCoinbaseTickerData(productIds);
-        
-        // let subscribe = {
-        //     type: "subscribe",
-        //     "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
-        // };
-
-        // this.socket.onopen = e => {
-        //     console.log("[open] Connection established");
-        //     console.log("Sending to server");
-        //     this.socket.send(JSON.stringify(subscribe));
-        // };
-
-        // this.socket.onmessage = event => {
-        //     console.log(`[message] Data received from server: ${event.data}`);
-        //     const message = JSON.parse(event.data);
-        //     let tickerPrice = {};
-        //     if (message.price) {
-        //         tickerPrice[message.product_id] = message.price;
-        //     }
-            
-        //     this.setState({
-        //         coinbaseData: message,
-        //         tickerPrices: { ...this.state.tickerPrices, ...tickerPrice}
-        //     });
-        // };
-
-        // this.socket.onclose = event => {
-        //     if (event.wasClean) {
-        //       console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-        //     } else {
-        //         // e.g. server process killed or network down
-        //         // event.code is usually 1006 in this case
-        //         console.log('[close] Connection died');
-        //     }
-        // };
-
-        // this.socket.onerror = error => {
-        //     console.log(`[error] ${error.message}`);
-        // };
+        // Get coinbase coin-currency productIds to subscribe to websocket
+        const productIds = accountDataService.getCoinbaseProductIds();
+        this.socket  = new CoinbaseWebSocket("ticker", productIds);
+        this.socket.connect();
+        // Storing snapshots of websocket to redux,
+        // as opposed to having websocket reponse saved to component state,
+        // makes it easier to control component updates by adding interval
+        // to the redux action call
+        this.interval = setInterval(() => this.props.setPrices(this.socket.getTickerPrices()), 1000)
     }
 
-    // componentWillUnmount = () => {
-    //     this.socket.close(1000, "STOP")
-    // }
-
-    handleOnClick = () => {
-        console.log("Attempting to stop")
-        // this.socket.close(1000, "STOP")
-        pricesService.coinbaseConnection.close();
+    componentWillUnmount = () => {
+        // Teardown - close websocket and clear interval on component unmount
+        this.socket.close();
+        clearInterval(this.interval);
     }
 
     render() {
-        let { tickerPrices } = this.state;
-        let { theme, account } = this.props;
+        let { theme, account, price } = this.props;
         let assets = account.assets;
         return (
             <div className="dashboard m-sm-30 ">
-                <button onClick={this.handleOnClick}>STOP THE WEBSOCKET</button>
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <StatsCards balance={account.total.fiatValue.usd} changes={account.total.changes} theme={theme}/>
 
-                        {tickerPrices!=={}? <AssetTableCard assets={assets} tickerPrices={tickerPrices}/>: <div>loading</div>}
+                        {price.success ? <AssetTableCard assets={assets} tickerPrices={price.prices}/>: <div>loading</div>}
 
                     </Grid>
                     <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -98,13 +55,19 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
     user: PropTypes.object.isRequired,
-    account: PropTypes.object.isRequired
+    account: PropTypes.object.isRequired,
+    setPrices: PropTypes.func.isRequired,
+    price: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     user: state.user,
-    account: state.account
+    account: state.account,
+    price: state.price
 });
 
+const mapDispatchToProps = dispatch => ({
+    setPrices: (prices) => dispatch(setPrices(prices))
+});
 
-export default withStyles({}, {withTheme: true})(withRouter(connect(mapStateToProps, {})(Dashboard)));
+export default withStyles({}, {withTheme: true})(withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard)));
