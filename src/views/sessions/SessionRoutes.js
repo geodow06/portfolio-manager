@@ -18,7 +18,7 @@ const settings = {
   footer: {
     show: false
   }
-}
+};
 
 // TODO
 // Add SignIn, SignUp, ForgotPassword

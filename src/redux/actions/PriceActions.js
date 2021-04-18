@@ -5,7 +5,6 @@ export const SET_PRICES_ERROR = "SET_PRICES_ERROR";
 
 export const setPrices = (prices = {}) => {
     return dispatch => {
-        console.log(prices)
         dispatch({
             type: SET_PRICES_LOADING
         });
@@ -18,7 +17,7 @@ export const setPrices = (prices = {}) => {
 
             dispatch({
                 type: SET_PRICES_SUCCESS
-            })
+            });
         } catch(error) {
 
             console.log(error);
@@ -27,6 +26,6 @@ export const setPrices = (prices = {}) => {
                 payload: error
             });
         }
-    }
+    };
 };
 

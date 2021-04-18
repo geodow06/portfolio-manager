@@ -13,7 +13,7 @@ class ChangeCard extends Component {
 
     handleChange = (event) => {
         this.setState({selectedOption: event.target.value});
-    }
+    };
 
     render() {
 

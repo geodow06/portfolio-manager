@@ -1,7 +1,5 @@
 import React from "react";
-import {
-    Redirect
-} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import dashboardRoutes from "views/dashboard/DashboardRoutes";
 import sessionRoutes from "views/sessions/SessionRoutes";
 
@@ -14,7 +12,7 @@ const redirectRoute = [{
 const errorRoute = [{
     path: "*",
     component: () => < Redirect to = "/session/404" />
-}]
+}];
 
 
 const routes = [

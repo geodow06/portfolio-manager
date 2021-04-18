@@ -10,11 +10,11 @@ class CoinbaseWebSocket {
 
         isConnected = () => {
             return this.isConnected;
-        }
+        };
 
         getTickerPrices = () => {
             return this.tickerPrices;
-        }
+        };
 
         connect = () => {
             console.log("Connecting...")
@@ -66,12 +66,12 @@ class CoinbaseWebSocket {
             this.tickerPrices = {
                 ...this.tickerPrices,
                 ...tickerPrice
-            }
-        }
+            };
+        };
 
         close = () => {
             this.socket.close(1000, "Close connection request");
-        }
+        };
 }
 
 export default CoinbaseWebSocket;

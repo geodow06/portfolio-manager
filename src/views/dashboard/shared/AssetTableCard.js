@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 
 const AssetTableCard = (props) => {
-    let { assets, tickerPrices } = props
+    let { assets, tickerPrices } = props;
     return(
         <Card elevation={6} className="pt-20 mb-24">
             <div className="card-title px-24 ml-12">Your Assets</div>

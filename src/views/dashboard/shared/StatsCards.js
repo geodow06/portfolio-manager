@@ -19,7 +19,7 @@ const StatsCards = ({balance, changes, theme}) => {
                 <ChangeCard changes={changes}/>
             </Grid>
         </Grid>
-      
+
     );
 };
 

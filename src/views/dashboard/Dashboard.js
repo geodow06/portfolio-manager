@@ -23,7 +23,7 @@ class Dashboard extends Component {
         // as opposed to having websocket reponse saved to component state,
         // makes it easier to control component updates by adding interval
         // to the redux action call
-        this.interval = setInterval(() => this.props.setPrices(this.socket.getTickerPrices()), 1000)
+        this.interval = setInterval(() => this.props.setPrices(this.socket.getTickerPrices()), 1000);
     }
 
     componentWillUnmount = () => {

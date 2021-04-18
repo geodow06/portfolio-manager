@@ -6,7 +6,7 @@ import { push } from "connected-react-router";
 import { withRouter } from "react-router-dom";
 
 class NotFound extends Component {
-  state = {};
+  
   render() {
     return (
       <div className="flex flex-center flex-middle w-100 h-100vh">
@@ -28,7 +28,7 @@ class NotFound extends Component {
 
 NotFound.propTypes = {
   pushTo: PropTypes.func.isRequired
-}
+};
 
 const mapDispatchToProp = dispatch => ({
   pushTo: url => dispatch(push(url)),

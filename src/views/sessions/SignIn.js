@@ -28,7 +28,7 @@ class SignIn extends Component {
     state = {
         username: "",
         password: ""
-    }
+    };
 
     handleChange = event => {
         event.persist();
@@ -119,7 +119,7 @@ SignIn.propTypes = {
     login: PropTypes.object.isRequired,
     loginWithUsernameAndPassword: PropTypes.func.isRequired,
     setAccountData: PropTypes.func.isRequired
-}
+};
 
 const mapStateToProps = state => ({
     login: state.login,

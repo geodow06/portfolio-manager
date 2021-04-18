@@ -10,7 +10,7 @@ const initialState = {
     success: false,
     error: {},
     prices: {}
-}
+};
 
 const PriceReducer = ( state = initialState, action ) => {
     
@@ -19,7 +19,7 @@ const PriceReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 loading: true
-            }
+            };
         } case SET_PRICES: {
             return {
                 ...state,
@@ -42,6 +42,6 @@ const PriceReducer = ( state = initialState, action ) => {
             return state;
         }
     }
-}
+};
 
 export default PriceReducer;

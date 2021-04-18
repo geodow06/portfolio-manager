@@ -55,17 +55,17 @@ class AccountService {
                 color: "#007bff"
             }
         ]
-    }
+    };
 
     getAccountData = () => {
-        let sessionData = localStorageService.getItem("data")
+        let sessionData = localStorageService.getItem("data");
         if (sessionData) {
             return sessionData;
-        }
+        };
         
         // API Call retrieves data
         return this.account;
-    }
+    };
 
     getCoinbaseProductIds = () => {
         // Filter for empty values
@@ -76,19 +76,18 @@ class AccountService {
         }).map((asset) => {
             return `${asset.ticker}-USD`;
         })
-        console.log(productIds);
         return productIds;
     }
 
     // Set Session Account Data in local storage to persist through refresh 
     setSessionAccountData = data => {
         localStorageService.setItem("data", data);
-    }
+    };
 
     // Remove Session Account Data from local storage
     removeSessionAccountData = () => {
         localStorage.removeItem("data")
-    }
+    };
 }
 
-export default new AccountService()
+export default new AccountService();
