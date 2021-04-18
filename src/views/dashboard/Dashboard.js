@@ -13,7 +13,8 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            coinbaseData: ""
+            coinbaseData: {},
+            tickerPrices: {}
         }
     }
     socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
@@ -21,7 +22,7 @@ class Dashboard extends Component {
     componentDidMount = () => {
         let subscribe = {
             type: "subscribe",
-            "channels": [{ name: "ticker", product_ids: ["BTC-GBP"] }]
+            "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
         };
 
         this.socket.onopen = e => {
@@ -31,9 +32,17 @@ class Dashboard extends Component {
         };
 
         this.socket.onmessage = event => {
-            console.log(`[message] Data received from server: ${event.data}`);
+            // console.log(`[message] Data received from server: ${event.data}`);
             const message = JSON.parse(event.data);
-            this.setState({coinbaseData: message});
+            let tickerPrice = {};
+            if (message.price) {
+                tickerPrice[message.product_id] = message.price;
+            }
+            
+            this.setState({
+                coinbaseData: message,
+                tickerPrices: { ...this.state.tickerPrices, ...tickerPrice}
+            });
         };
 
         this.socket.onclose = event => {
@@ -61,7 +70,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        let { coinbaseData } = this.state;
+        let { tickerPrices } = this.state;
         let { theme, account } = this.props;
         let assets = account.assets;
         return (
@@ -71,7 +80,7 @@ class Dashboard extends Component {
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <StatsCards balance={account.total.fiatValue.usd} changes={account.total.changes} theme={theme}/>
 
-                        {coinbaseData!==""? <AssetTableCard assets={assets} priceData={coinbaseData}/>: <div>loading</div>}
+                        {tickerPrices!=={}? <AssetTableCard assets={assets} tickerPrices={tickerPrices}/>: <div>loading</div>}
 
                     </Grid>
                     <Grid item lg={4} md={4} sm={12} xs={12}>

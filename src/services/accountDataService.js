@@ -19,7 +19,7 @@ class AccountService {
                 ticker: "BTC",
                 balance: { 
                     fiat: "$1.00",
-                    amount: "1.00"
+                    amount: "2.00"
                 },
                 allocation: "10",
                 color: "#F2A900"
@@ -29,7 +29,7 @@ class AccountService {
                 ticker: "XLM",
                 balance: { 
                     fiat: "$2.00",
-                    amount: "1.00"
+                    amount: "2.00"
                 },
                 allocation: "20",
                 color: "#2a2a2a"
@@ -39,7 +39,7 @@ class AccountService {
                 ticker: "GTH",
                 balance: { 
                     fiat: "$7.00",
-                    amount: "1.00"
+                    amount: "7.00"
                 },
                 allocation: "70",
                 color: "#6610f2"
