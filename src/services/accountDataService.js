@@ -19,7 +19,7 @@ class AccountService {
                 ticker: "BTC",
                 balance: { 
                     fiat: "$1.00",
-                    amount: "1.00"
+                    amount: "2.00"
                 },
                 allocation: "10",
                 color: "#F2A900"
@@ -29,7 +29,7 @@ class AccountService {
                 ticker: "XLM",
                 balance: { 
                     fiat: "$2.00",
-                    amount: "1.00"
+                    amount: "2.00"
                 },
                 allocation: "20",
                 color: "#2a2a2a"
@@ -39,7 +39,7 @@ class AccountService {
                 ticker: "GTH",
                 balance: { 
                     fiat: "$7.00",
-                    amount: "1.00"
+                    amount: "7.00"
                 },
                 allocation: "70",
                 color: "#6610f2"
@@ -55,27 +55,39 @@ class AccountService {
                 color: "#007bff"
             }
         ]
-    }
+    };
 
     getAccountData = () => {
-        let sessionData = localStorageService.getItem("data")
+        let sessionData = localStorageService.getItem("data");
         if (sessionData) {
             return sessionData;
-        }
+        };
         
         // API Call retrieves data
         return this.account;
+    };
+
+    getCoinbaseProductIds = () => {
+        // Filter for empty values
+        // Then map each non zero asset to coinbase friendly ticker
+        // TODO Based on user preferred currency
+        const productIds = this.account.assets.filter((asset) => {
+            return parseFloat(asset.balance.amount);
+        }).map((asset) => {
+            return `${asset.ticker}-USD`;
+        })
+        return productIds;
     }
 
     // Set Session Account Data in local storage to persist through refresh 
     setSessionAccountData = data => {
         localStorageService.setItem("data", data);
-    }
+    };
 
     // Remove Session Account Data from local storage
     removeSessionAccountData = () => {
         localStorage.removeItem("data")
-    }
+    };
 }
 
-export default new AccountService()
+export default new AccountService();

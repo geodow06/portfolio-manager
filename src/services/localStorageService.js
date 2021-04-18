@@ -1,6 +1,6 @@
 class localStorageService {
 
-    ls = window.localStorage
+    ls = window.localStorage;
 
     setItem(key, value) {
         value = JSON.stringify(value);

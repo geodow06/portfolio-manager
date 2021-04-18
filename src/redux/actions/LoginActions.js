@@ -30,7 +30,7 @@ export function loginWithUsernameAndPassword({ username, password }) {
             });
             
         } catch(error) {
-            console.log(error)
+            console.log(error);
             return dispatch({
                 type: LOGIN_ERROR,
                 payload: error

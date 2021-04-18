@@ -3,7 +3,7 @@ import { GeodowLoadable } from "geodow";
 
 const Dashboard = GeodowLoadable({
     loader: () => import("./Dashboard")
-})
+});
 
 const dashboardRoutes = [
     {

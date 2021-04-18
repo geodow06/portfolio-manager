@@ -12,7 +12,7 @@ export function setUserData(user) {
             type: SET_USER_DATA,
             data: user
         });
-    }
+    };
 }
 
 export function logoutUser() {
@@ -24,5 +24,5 @@ export function logoutUser() {
         dispatch({
             type: LOGOUT_USER
         });
-    }
+    };
 }

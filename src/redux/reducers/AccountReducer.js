@@ -8,7 +8,7 @@ const AccountReducer = (state = initialState, action) => {
         return {
             ...state,
             ...action.data
-        }
+        };
     }
 
     return state;

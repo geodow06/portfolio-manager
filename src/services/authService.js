@@ -7,7 +7,7 @@ class AuthService {
         username:"JohnDoe",
         role:'ADMIN',
         token: "correctdummy"
-    }
+    };
 
     loginWithUsernameAndPassword = (username, password) => {
         // TODO Add axios API calls
@@ -25,7 +25,7 @@ class AuthService {
         } else {
             throw "Failed to authenticate";
         }
-    }
+    };
 
     loginWithToken = () => {
         // Check local storage for token
@@ -34,12 +34,12 @@ class AuthService {
         }
         // TODO Mock API return
         return this.authenticatedUser;
-    }
+    };
     
     logout = () => {
         this.setSession(null);
         this.removeUser();
-    }
+    };
 
     // Set accepted token in local storage
     setSession = token => {
@@ -53,11 +53,11 @@ class AuthService {
     // Save user to localstorage
     setUser = (user) => {    
         localStorageService.setItem("auth_user", user);
-    }
+    };
     // Remove user from localstorage
     removeUser = () => {
         localStorage.removeItem("auth_user");
-    }
+    };
    
 }
 
