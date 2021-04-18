@@ -6,8 +6,7 @@ import { withRouter } from "react-router-dom";
 import StatsCards from "views/dashboard/shared/StatsCards";
 import AssetTableCard from "./shared/AssetTableCard";
 import BreakdownChartCard from "./shared/BreakdownChartCard";
-
-// let socket = ""
+import pricesService from "services/pricesService";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -17,52 +16,56 @@ class Dashboard extends Component {
             tickerPrices: {}
         }
     }
-    socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
+    // socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
 
     componentDidMount = () => {
-        let subscribe = {
-            type: "subscribe",
-            "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
-        };
+        console.log("Dashboard Did mount")
+        const productIds = [ "BTC-USD","LINK-USD","XLM-USD"];
+        pricesService.getLiveCoinbaseTickerData(productIds);
+        
+        // let subscribe = {
+        //     type: "subscribe",
+        //     "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
+        // };
 
-        this.socket.onopen = e => {
-            console.log("[open] Connection established");
-            console.log("Sending to server");
-            this.socket.send(JSON.stringify(subscribe));
-        };
+        // this.socket.onopen = e => {
+        //     console.log("[open] Connection established");
+        //     console.log("Sending to server");
+        //     this.socket.send(JSON.stringify(subscribe));
+        // };
 
-        this.socket.onmessage = event => {
-            // console.log(`[message] Data received from server: ${event.data}`);
-            const message = JSON.parse(event.data);
-            let tickerPrice = {};
-            if (message.price) {
-                tickerPrice[message.product_id] = message.price;
-            }
+        // this.socket.onmessage = event => {
+        //     console.log(`[message] Data received from server: ${event.data}`);
+        //     const message = JSON.parse(event.data);
+        //     let tickerPrice = {};
+        //     if (message.price) {
+        //         tickerPrice[message.product_id] = message.price;
+        //     }
             
-            this.setState({
-                coinbaseData: message,
-                tickerPrices: { ...this.state.tickerPrices, ...tickerPrice}
-            });
-        };
+        //     this.setState({
+        //         coinbaseData: message,
+        //         tickerPrices: { ...this.state.tickerPrices, ...tickerPrice}
+        //     });
+        // };
 
-        this.socket.onclose = event => {
-            if (event.wasClean) {
-              console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-            } else {
-                // e.g. server process killed or network down
-                // event.code is usually 1006 in this case
-                console.log('[close] Connection died');
-            }
-        };
+        // this.socket.onclose = event => {
+        //     if (event.wasClean) {
+        //       console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        //     } else {
+        //         // e.g. server process killed or network down
+        //         // event.code is usually 1006 in this case
+        //         console.log('[close] Connection died');
+        //     }
+        // };
 
-        this.socket.onerror = error => {
-            console.log(`[error] ${error.message}`);
-        };
+        // this.socket.onerror = error => {
+        //     console.log(`[error] ${error.message}`);
+        // };
     }
 
-    componentWillUnmount = () => {
-        this.socket.close(1000, "STOP")
-    }
+    // componentWillUnmount = () => {
+    //     this.socket.close(1000, "STOP")
+    // }
 
     handleOnClick = () => {
         console.log("Attempting to stop")
