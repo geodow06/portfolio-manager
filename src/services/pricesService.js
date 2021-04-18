@@ -2,28 +2,29 @@ import CoinbaseWebSocket from "utils/CoinbaseWebSocket";
 
 class PricesService {
 
-    print = () => {
-        console.log("hello")
+    constructor() {
+        this.coinbaseConnection = null
     }
     
     // Open Websocket to get live coinbase data
-    getLiveCoinbaseTickerData = async (productIds = null) => {
-        const connection = new CoinbaseWebSocket("ticker", productIds)
-        connection.connect();
+    getLiveCoinbaseTickerData = (productIds = null) => {
+        this.coinbaseConnection = new CoinbaseWebSocket("ticker", productIds)
+        this.coinbaseConnection.connect();
         
         // while (!connection.isOpen() || connection.connectionFailed()) {
 
         // }
-        setTimeout(() => this.logPrices(connection), 1000);
+        // setTimeout(() => this.logPrices(connection), 1000);
        
 
-        connection.close();
+        
     }
 
     logPrices = async (connection) => {
         
-        while (connection.tickerPrices.length < 2 && !connection.connectionFailed()) {
-            console.log(connection.getTickerPrices());
+        while (this.coinbaseConnection.tickerPrices.length < 2 && !this.coinbaseConnection.connectionFailed()) {
+            console.log(this.coinbaseConnection.getTickerPrices());
+            this.coinbaseConnection.close();
         }
     }
 

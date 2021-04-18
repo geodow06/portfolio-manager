@@ -3,7 +3,7 @@ class CoinbaseWebSocket {
         constructor(channel, productIds) {
             this.socket = new WebSocket("wss://ws-feed.pro.coinbase.com");
             this.productIds = productIds;
-            this.chanel = channel;
+            this.channel = channel;
             this.tickerPrices = {};
             this.isOpen = false;
             this.connectionFailed = false;
@@ -24,9 +24,14 @@ class CoinbaseWebSocket {
         connect = () => {
             console.log("Connecting...")
             const subscribe = {
+                
                 type: "subscribe",
-                "channels": [{ name: this.channel, product_ids: this.productIds }]
+                "channels": [{ name: "ticker", product_ids: [ "BTC-USD","LINK-USD","XLM-USD"] }]
+                // type: "subscribe",
+                // "channels": [{ name: this.channel, product_ids: this.productIds }]
             };
+
+            console.log(subscribe);
 
             this.socket.onopen = e => {
                 console.log("[open] Connection established with Coinbase");
@@ -36,7 +41,7 @@ class CoinbaseWebSocket {
             };
     
             this.socket.onmessage = event => {
-                // console.log(`[message] Data received from server: ${event.data}`);
+                console.log(`[message] Data received from server: ${event.data}`);
                 const message = JSON.parse(event.data);
                 let tickerPrice = {};
                 if (message.price) {

@@ -1,7 +1,7 @@
-const SET_PRICES = "SET_PRICES";
-const SET_PRICES_LOADING = "SET_PRICES_LOADING";
-const SET_PRICES_SUCCESS = "SET_PRICES_SUCCESS";
-const SET_PRICES_ERROR = "SET_PRICES_ERROR";
+export const SET_PRICES = "SET_PRICES";
+export const SET_PRICES_LOADING = "SET_PRICES_LOADING";
+export const SET_PRICES_SUCCESS = "SET_PRICES_SUCCESS";
+export const SET_PRICES_ERROR = "SET_PRICES_ERROR";
 
 export const setPrices = () => {
     return dispatch => {
@@ -21,7 +21,7 @@ export const setPrices = () => {
             });
 
             dispatch({
-                type: SET_PRICES_SUCCESS,
+                type: SET_PRICES_SUCCESS
             })
         } catch(error) {
 

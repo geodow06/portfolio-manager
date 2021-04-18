@@ -16,10 +16,10 @@ class Dashboard extends Component {
             tickerPrices: {}
         }
     }
-    // socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
+    socket = new WebSocket("wss://ws-feed.pro.coinbase.com")
 
     componentDidMount = () => {
-        console.log("Dashboard Did mount")
+        // console.log("Dashboard Did mount")
         const productIds = [ "BTC-USD","LINK-USD","XLM-USD"];
         pricesService.getLiveCoinbaseTickerData(productIds);
         
@@ -69,7 +69,8 @@ class Dashboard extends Component {
 
     handleOnClick = () => {
         console.log("Attempting to stop")
-        this.socket.close(1000, "STOP")
+        // this.socket.close(1000, "STOP")
+        pricesService.coinbaseConnection.close();
     }
 
     render() {
