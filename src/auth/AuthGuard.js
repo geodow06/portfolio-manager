@@ -13,21 +13,22 @@ class AuthGuard extends Component {
         let { routes } = context;
 
         this.state = {
-            authenticated: false,
+            authorized: false,
             routes
         };
     }
 
     componentDidMount() {
-        // If not authenticated redirect
-        if (!this.state.authenticated) {
+        // If not authorized redirect
+        console.log("mounted")
+        if (!this.state.authorized) {
             this.redirectRoute(this.props);
         }
     }
 
     componentDidUpdate() {
-        // If not authenticated redirect
-        if (!this.state.authenticated) {
+        // If not authorized redirect
+        if (!this.state.authorized) {
             this.redirectRoute(this.props);
         }
     }
@@ -35,22 +36,22 @@ class AuthGuard extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         // Only update component if user privelage
         // changes based on route access level
-        return nextState.authenticated !== this.state.authenticated;
+        return nextState.authorized !== this.state.authorized;
     }
 
     static getDerivedStateFromProps(props, state) {
-        // Update authenticated state variable based on current
+        // Update authorized state variable based on current
         // route and user role privaleges
         const { location, user } = props;
         const { pathname } = location;
         const matched = state.routes.find(r => r.path === pathname);
-        const authenticated = matched && matched.auth && matched.auth.length
+        const authorized = matched && matched.auth && matched.auth.length
                 // Check matched routes auth Array contains
                 // Users access role
                 ? matched.auth.includes(user.role)
                 : true;
         return {
-            authenticated
+            authorized
         };
     }
 
@@ -60,13 +61,13 @@ class AuthGuard extends Component {
         props.pushTo({
             pathname: "/session/signin",
         })
-      }
+    }
 
-      render() {
+    render() {
         let { children } = this.props;
-        const { authenticated } = this.state;
-        return authenticated ? <Fragment>{children}</Fragment> : null;
-      }
+        const { authorized } = this.state;
+        return authorized ? <Fragment>{children}</Fragment> : null;
+    }
 }
 
 AuthGuard.contextType = AppContext;

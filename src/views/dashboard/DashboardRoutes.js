@@ -1,4 +1,3 @@
-import { authRoles } from "auth/authRoles";
 import { GeodowLoadable } from "geodow";
 
 const Dashboard = GeodowLoadable({
@@ -8,8 +7,7 @@ const Dashboard = GeodowLoadable({
 const dashboardRoutes = [
     {
         path: "/dashboard/home",
-        component: Dashboard,
-        auth: authRoles.admin
+        component: Dashboard
     }
 ];
 

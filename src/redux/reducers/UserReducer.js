@@ -1,4 +1,4 @@
-import { SET_USER_DATA, LOGOUT_USER, REMOVE_USER_DATA } from "redux/actions/UserActions";
+import { SET_USER_DATA, REMOVE_USER_DATA } from "redux/actions/UserActions";
 
 const initialState = {};
 
@@ -16,12 +16,6 @@ const userReducer = function(state = initialState, action) {
         };
     }
     
-    if (action.type === LOGOUT_USER) {
-        return {
-            state
-        };
-    }
-
     return state;
 }
 

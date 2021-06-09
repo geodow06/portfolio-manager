@@ -5,6 +5,7 @@ import UserReducer from "./UserReducer";
 import LayoutReducer from "./LayoutReducer";
 import AccountReducer from "./AccountReducer";
 import PriceReducer from "./PriceReducer";
+import SessionReducer from "./SessionReducer";
 
 const rootReducer = history => combineReducers({
     login: LoginReducer,
@@ -12,7 +13,9 @@ const rootReducer = history => combineReducers({
     layout: LayoutReducer,
     account: AccountReducer,
     price: PriceReducer,
-    router: connectRouter(history)
+    session: SessionReducer,
+    router: connectRouter(history),
+    
 });
 
 export default rootReducer;

@@ -2,7 +2,7 @@ import {
     SET_LAYOUT_SETTINGS,
     SET_DEFAULT_LAYOUT_SETTINGS
   } from "redux/actions/LayoutActions";
-  import { PortfolioLayoutSettings } from "PortfolioLayout/settings";
+  import { PortfolioLayoutSettings } from "portfolioLayout/settings";
   
   const initialState = {
     settings: {

@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import SideNav from "PortfolioLayout/SharedComponents/SideNav";
-import SideNavTheme from "PortfolioLayout/Theme/SideNavTheme";
+import SideNav from "portfolioLayout/SharedComponents/SideNav";
+import SideNavTheme from "portfolioLayout/Theme/SideNavTheme";
 import { setLayoutSettings, setDefaultSettings } from "redux/actions/LayoutActions";
-import { logoutUser } from "redux/actions/UserActions";
-import Brand from "PortfolioLayout/SharedComponents/Brand";
+import { clearSession } from "redux/actions/SessionActions";
+import Brand from "portfolioLayout/SharedComponents/Brand";
 import GeodowMenu from "geodow/components/GeodowMenu";
 
 const styles = theme => ({});
@@ -33,7 +33,7 @@ class LayoutSideNavbar extends Component {
                             <SideNav >
                                 <GeodowMenu> 
                                     <MenuItem 
-                                        onClick={() => this.props.logoutUser()}
+                                        onClick={() => this.props.clearSession()}
                                         className="flex flex-middle"
                                         style={{ minWidth: 185 }}>
                                             <Icon> power_settings_new </Icon>
@@ -60,7 +60,7 @@ class LayoutSideNavbar extends Component {
 LayoutSideNavbar.propTypes = {
     setLayoutSettings: PropTypes.func.isRequired,
     setDefaultSettings: PropTypes.func.isRequired,
-    logoutUser: PropTypes.func.isRequired,
+    clearSession: PropTypes.func.isRequired,
     settings: PropTypes.object.isRequired
 }
 
@@ -68,9 +68,14 @@ const mapStateToProps = state => ({
     settings: state.layout.settings
 });
 
+const mapDispatchToProps = dispatch => ({
+    setLayoutSettings: () => dispatch(setLayoutSettings()),
+    setDefaultSettings: () => dispatch(setDefaultSettings()),
+    clearSession: () => dispatch(clearSession()),
+})
+
 export default withStyles(styles, {withTheme: true})(
     withRouter(
-        connect(mapStateToProps, { 
-        setLayoutSettings, setDefaultSettings, logoutUser
-    })(LayoutSideNavbar))
-);
+        connect(mapStateToProps, mapDispatchToProps)(LayoutSideNavbar)
+        )
+    );

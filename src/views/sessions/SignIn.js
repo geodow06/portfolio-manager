@@ -7,7 +7,7 @@ import { PropTypes } from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
-import { logoutUser } from "redux/actions/UserActions";
+import { attemptOAuthAuthentication } from "redux/actions/SessionActions";
 
 const styles = theme => ({
     wrapper: {
@@ -39,8 +39,11 @@ class SignIn extends Component {
 
     handleSubmit = event => {
         this.props.loginWithUsernameAndPassword({ ...this.state });
-        // this.props.setAccountData({ ...this.state });
     };
+
+    handleOnClick = event => {
+        this.props.attemptOAuthAuthentication("cognito");
+    }
 
     render() {
         let { username, password } = this.state;
@@ -96,6 +99,12 @@ class SignIn extends Component {
                                                 >
                                                 Sign In
                                                 </Button>
+                                                <Button variant="contained"
+                                                    color="primary"
+                                                    disabled={this.props.login.loading}
+                                                    onClick={this.handleOnClick}
+                                                    type="onClick">Sign in with cognito
+                                                </Button>
                                                 {this.props.login.loading && (
                                                     <CircularProgress
                                                         size={24}
@@ -118,15 +127,19 @@ class SignIn extends Component {
 SignIn.propTypes = {
     login: PropTypes.object.isRequired,
     loginWithUsernameAndPassword: PropTypes.func.isRequired,
-    setAccountData: PropTypes.func.isRequired
+    setAccountData: PropTypes.func.isRequired,
+    session: PropTypes.object.isRequired,
+    attemptAuthentication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     login: state.login,
+    session: state.session
 });
 
 const mapDispatchToProps = dispatch => ({
     loginWithUsernameAndPassword: state => dispatch(loginWithUsernameAndPassword({...state})),
+    attemptOAuthAuthentication: (provider) => dispatch(attemptOAuthAuthentication(provider)),
     setAccountData: () => dispatch(setAccountData())
 
 });

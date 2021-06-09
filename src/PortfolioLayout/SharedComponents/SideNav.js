@@ -4,7 +4,7 @@ import Scrollbar from "react-perfect-scrollbar";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { navigations } from "navigations";
-import GeodowVerticalNav from "geodow/components/GeodowVerticalNav/GeodowVerticalNav";
+import GeodowVerticalNav from "geodow/components/geodowVerticalNav/GeodowVerticalNav";
 import { setLayoutSettings } from "redux/actions/LayoutActions";
 
 class Sidenav extends Component {
