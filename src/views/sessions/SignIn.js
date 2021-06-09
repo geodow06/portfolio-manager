@@ -7,6 +7,7 @@ import { PropTypes } from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
+import cognitoImage from "assets/images/cognito.png"
 import { attemptOAuthAuthentication } from "redux/actions/SessionActions";
 
 const styles = theme => ({
@@ -99,12 +100,6 @@ class SignIn extends Component {
                                                 >
                                                 Sign In
                                                 </Button>
-                                                <Button variant="contained"
-                                                    color="primary"
-                                                    disabled={this.props.login.loading}
-                                                    onClick={this.handleOnClick}
-                                                    type="onClick">Sign in with cognito
-                                                </Button>
                                                 {this.props.login.loading && (
                                                     <CircularProgress
                                                         size={24}
@@ -114,6 +109,18 @@ class SignIn extends Component {
                                             </div>
                                         </div>
                                     </ValidatorForm>
+                                    {/* TODO - Implement OAuth provider list component to render each provider image */}
+                                    <div className={classes.wrapper}>
+                                        <div className="flex flex-middle mt-24">
+                                            Or log in with a provider
+                                            <Button 
+                                                    disabled={this.props.login.loading}
+                                                    onClick={this.handleOnClick}
+                                                    type="onClick">
+                                                    <img src={cognitoImage} className="size-36" alt="fgd" />
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </Grid>
                         </Grid>
