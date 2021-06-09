@@ -9,7 +9,7 @@ import AppContext from "appContext";
 import PortfolioLayout from "portfolioLayout/PortfolioLayout";
 import AuthGuard from "auth/AuthGuard";
 import Theme from "portfolioLayout/Theme/Theme";
-import AuthNew from "auth/AuthNew";
+import Auth from "auth/Auth";
 
 
 const App = () => {
@@ -22,14 +22,14 @@ const App = () => {
         <Theme>
           <ConnectedRouter history={history} context={ReactReduxContext}>
             {/* Auth component ensures a valid session */}
-            <AuthNew>
+            <Auth>
               {/* AuthGuard checks current user is authorized to access route */}
               <AuthGuard>
                 <Switch>
                   <PortfolioLayout/>
                 </Switch>
               </AuthGuard>
-            </AuthNew>
+            </Auth>
           </ConnectedRouter>
         </Theme>
       </Provider>

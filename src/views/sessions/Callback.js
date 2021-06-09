@@ -20,7 +20,6 @@ function mapStateToProps (state) {
     // If a Cognito auth code is in the URL (could be a hash or query component), init the new session
     componentDidMount () {
       if (this.props.location.hash || this.props.location.search) {
-        console.log("callback")
         this.props.initAuthFromCallbackURI(window.location.href)
       }
     }
