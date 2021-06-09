@@ -1,5 +1,4 @@
 import { AUTHENTICATING_SESSION, CLEAR_SESSION, INVALID_SESSION, SESSION_AUTHENTICATED, SET_SESSION } from 'redux/actions/SessionActions';
-import localStorageService from 'services/localStorageService';
 
 const initialState = {
   isLoggedIn: false,
@@ -7,7 +6,7 @@ const initialState = {
   authenticating: false
 }
 
-const session = (state = initialState, action) => {
+const session = ( state = initialState, action = {} ) => {
   switch (action.type) {
     case AUTHENTICATING_SESSION:
       console.log("attempting")

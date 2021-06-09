@@ -2,7 +2,7 @@ import { SET_USER_DATA, REMOVE_USER_DATA } from "redux/actions/UserActions";
 
 const initialState = {};
 
-const userReducer = function(state = initialState, action) {
+const userReducer = function( state = initialState, action = {} ) {
     if (action.type === SET_USER_DATA) {
         return {
             ...state,

@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import SideNav from "portfolioLayout/SharedComponents/SideNav";
 import SideNavTheme from "portfolioLayout/Theme/SideNavTheme";
-import { setLayoutSettings, setDefaultSettings } from "redux/actions/LayoutActions";
+import { setLayoutSettings } from "redux/actions/LayoutActions";
 import { clearSession } from "redux/actions/SessionActions";
 import Brand from "portfolioLayout/SharedComponents/Brand";
 import GeodowMenu from "geodow/components/GeodowMenu";
@@ -59,7 +59,6 @@ class LayoutSideNavbar extends Component {
 
 LayoutSideNavbar.propTypes = {
     setLayoutSettings: PropTypes.func.isRequired,
-    setDefaultSettings: PropTypes.func.isRequired,
     clearSession: PropTypes.func.isRequired,
     settings: PropTypes.object.isRequired
 }
@@ -70,7 +69,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setLayoutSettings: () => dispatch(setLayoutSettings()),
-    setDefaultSettings: () => dispatch(setDefaultSettings()),
     clearSession: () => dispatch(clearSession()),
 })
 

@@ -13,7 +13,7 @@ import {
     }
   };
   
-  const LayoutReducer = (state = initialState, action) => {
+  const LayoutReducer = ( state = initialState, action = {} ) => {
     switch (action.type) {
       case SET_LAYOUT_SETTINGS:
         return {
