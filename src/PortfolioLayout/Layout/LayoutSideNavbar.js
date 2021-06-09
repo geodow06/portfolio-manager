@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import SideNav from "portfolioLayout/SharedComponents/SideNav";
 import SideNavTheme from "portfolioLayout/Theme/SideNavTheme";
 import { setLayoutSettings } from "redux/actions/LayoutActions";
-import { clearSession } from "redux/actions/SessionActions";
+import { logout } from "redux/actions/AuthActions";
 import Brand from "portfolioLayout/SharedComponents/Brand";
 import GeodowMenu from "geodow/components/GeodowMenu";
 
@@ -33,7 +33,7 @@ class LayoutSideNavbar extends Component {
                             <SideNav >
                                 <GeodowMenu> 
                                     <MenuItem 
-                                        onClick={() => this.props.clearSession()}
+                                        onClick={() => this.props.logout()}
                                         className="flex flex-middle"
                                         style={{ minWidth: 185 }}>
                                             <Icon> power_settings_new </Icon>
@@ -59,7 +59,7 @@ class LayoutSideNavbar extends Component {
 
 LayoutSideNavbar.propTypes = {
     setLayoutSettings: PropTypes.func.isRequired,
-    clearSession: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     settings: PropTypes.object.isRequired
 }
 
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setLayoutSettings: () => dispatch(setLayoutSettings()),
-    clearSession: () => dispatch(clearSession()),
+    logout: () => dispatch(logout()),
 })
 
 export default withStyles(styles, {withTheme: true})(

@@ -49,13 +49,10 @@ class Auth extends Component {
 
 Auth.propTypes = {
     setUser: PropTypes.func.isRequired,
-    login: PropTypes.object.isRequired,
     setAccountData: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    login: state.login,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
     pushTo: url => dispatch(push(url)),

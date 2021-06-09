@@ -31,7 +31,7 @@ class LocalStorageService {
       this.ls.removeItem(key)
     }
 
-    clearSession() {
+    clearLocalStorage() {
       this.ls.removeItem("session_token");
       this.ls.removeItem("jwt_token");
       this.ls.removeItem("auth_user");

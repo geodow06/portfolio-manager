@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { loginWithUsernameAndPassword } from "redux/actions/LoginActions";
 import { setAccountData } from "redux/actions/AccountActions";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
@@ -8,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
 import cognitoImage from "assets/images/cognito.png"
-import { attemptOAuthAuthentication } from "redux/actions/SessionActions";
+import { loginWithUsernameAndPassword, attemptOAuthAuthentication } from "redux/actions/AuthActions";
 
 const styles = theme => ({
     wrapper: {
@@ -95,12 +94,12 @@ class SignIn extends Component {
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
-                                                    disabled={this.props.login.loading}
+                                                    disabled={this.props.auth.loading}
                                                     type="submit"
                                                 >
                                                 Sign In
                                                 </Button>
-                                                {this.props.login.loading && (
+                                                {this.props.auth.loading && (
                                                     <CircularProgress
                                                         size={24}
                                                         className={classes.buttonProgress}
@@ -114,7 +113,7 @@ class SignIn extends Component {
                                         <div className="flex flex-middle mt-24">
                                             Or log in with a provider
                                             <Button 
-                                                    disabled={this.props.login.loading}
+                                                    disabled={this.props.auth.loading}
                                                     onClick={this.handleOnClick}
                                                     type="onClick">
                                                     <img src={cognitoImage} className="size-36" alt="fgd" />
@@ -132,23 +131,20 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-    login: PropTypes.object.isRequired,
     loginWithUsernameAndPassword: PropTypes.func.isRequired,
     setAccountData: PropTypes.func.isRequired,
-    session: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     attemptAuthentication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    login: state.login,
-    session: state.session
+    auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({
     loginWithUsernameAndPassword: state => dispatch(loginWithUsernameAndPassword({...state})),
     attemptOAuthAuthentication: (provider) => dispatch(attemptOAuthAuthentication(provider)),
     setAccountData: () => dispatch(setAccountData())
-
 });
 
 

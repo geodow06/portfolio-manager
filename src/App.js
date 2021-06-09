@@ -8,7 +8,6 @@ import routes from "rootRoutes";
 import AppContext from "appContext";
 import PortfolioLayout from "portfolioLayout/PortfolioLayout";
 import AuthGuard from "auth/AuthGuard";
-import Auth from "auth/Auth";
 import Theme from "portfolioLayout/Theme/Theme";
 import AuthNew from "auth/AuthNew";
 
@@ -21,18 +20,17 @@ const App = () => {
       <Provider store={configureStore(history)} context={ReactReduxContext}>
         {/* Theme component to pass style and setting to children */}
         <Theme>
-          {/* <Auth> */}
-            <ConnectedRouter history={history} context={ReactReduxContext}>
-              <AuthNew>
-                <AuthGuard>
-                  <Switch>
-                    <PortfolioLayout/>
-                  </Switch>
-                </AuthGuard>
-              </AuthNew>
-            </ConnectedRouter>
-          {/* </Auth>
-           */}
+          <ConnectedRouter history={history} context={ReactReduxContext}>
+            {/* Auth component ensures a valid session */}
+            <AuthNew>
+              {/* AuthGuard checks current user is authorized to access route */}
+              <AuthGuard>
+                <Switch>
+                  <PortfolioLayout/>
+                </Switch>
+              </AuthGuard>
+            </AuthNew>
+          </ConnectedRouter>
         </Theme>
       </Provider>
     </AppContext.Provider>

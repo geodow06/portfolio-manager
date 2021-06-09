@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { initSessionFromCallbackURI } from "redux/actions/SessionActions";
+import { initAuthFromCallbackURI } from "redux/actions/AuthActions";
+
 function mapStateToProps (state) {
-    return { session: state.session }
+    return { auth: state.auth }
   }
   function mapDispatchToProps (dispatch) {
     return {
-      initSessionFromCallbackURI: href => dispatch(initSessionFromCallbackURI(href))
+      initAuthFromCallbackURI: href => dispatch(initAuthFromCallbackURI(href))
     }
   }
   
@@ -20,20 +21,19 @@ function mapStateToProps (state) {
     componentDidMount () {
       if (this.props.location.hash || this.props.location.search) {
         console.log("callback")
-        this.props.initSessionFromCallbackURI(window.location.href)
+        this.props.initAuthFromCallbackURI(window.location.href)
       }
     }
   
     render () {
       // If there's no auth code in the URL or we're now logged into, redirect to the root page
-      if ((!this.props.location.hash && !this.props.location.search) || this.props.session.isLoggedIn) {
+      if ((!this.props.location.hash && !this.props.location.search) || this.props.auth.isAuthenticated) {
         return <Redirect to="/" />
       }
       
   
       return (
         <div>
-          {this.props.session && <div>{this.props.session.isLoggedIn.toString()}</div>}
         </div>
       );
     }

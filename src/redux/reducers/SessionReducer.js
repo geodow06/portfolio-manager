@@ -1,45 +1,43 @@
-import { AUTHENTICATING_SESSION, CLEAR_SESSION, INVALID_SESSION, SESSION_AUTHENTICATED, SET_SESSION } from 'redux/actions/SessionActions';
+import { 
+  CLEAR_SESSION, 
+  INVALID_SESSION, 
+  SET_SESSION,
+  SET_SESSION_SUCCESS
+} from 'redux/actions/SessionActions';
 
 const initialState = {
-  isLoggedIn: false,
-  authenticated: false,
-  authenticating: false
+  token: null,
+  success: false,
+  loading: false,
+  error: null
 }
 
 const session = ( state = initialState, action = {} ) => {
   switch (action.type) {
-    case AUTHENTICATING_SESSION:
-      console.log("attempting")
-      return {
-        ...state,
-        isLoggedIn: false,
-        authenticated: false,
-        authenticating: true
-      };
-
+  
     case SET_SESSION:
-      return Object.assign({},
-        action.session,
-        { 
-          isLoggedIn: true, 
-          authenticated: true,
-          authenticating: false
-        });
+      return {
+        ...initialState,
+        token: action.data,
+        loading: true
+      }
 
     case CLEAR_SESSION:
       return initialState;
 
-    case SESSION_AUTHENTICATED:
+    case INVALID_SESSION:
+      // Do something?
       return {
-        ...state.authenticated,
-        isLoggedIn: true,
-        authenticated: true,
-        authenticating: false
-      };
-    // case INVALID_SESSION:
-    //   return {
-    //     ...state
-    //   }
+        ...initialState,
+        error: action.data
+      }
+      
+    case SET_SESSION_SUCCESS:
+      return {
+        ...state,
+        success: true
+      }
+    
     default:
       return state;
   }

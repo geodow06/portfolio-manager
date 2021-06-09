@@ -5,7 +5,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { MenuItem } from "@material-ui/core";
 import userImage from "assets/images/rogers.jpg";
-import { clearSession } from "redux/actions/SessionActions";
+import { logout } from "redux/actions/AuthActions";
 import GeodowMenu from "geodow/components/GeodowMenu";
 
 const styles = theme => ({
@@ -37,7 +37,7 @@ class Topbar extends Component {
                                     }
                                 >    
                                     <MenuItem 
-                                        onClick={() => this.props.clearSession()}
+                                        onClick={() => this.props.logout()}
                                         className="flex flex-middle"
                                         style={{ minWidth: 185 }}>
                                             <Icon> power_settings_new </Icon>
@@ -55,7 +55,7 @@ class Topbar extends Component {
 
 Topbar.propTypes = {
     settings: PropTypes.object.isRequired,
-    clearSession: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    clearSession: () => dispatch(clearSession())
+    logout: () => dispatch(logout())
 })
 
 export default withStyles(styles, { withTheme: true })(

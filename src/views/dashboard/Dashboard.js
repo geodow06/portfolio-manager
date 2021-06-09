@@ -34,8 +34,9 @@ class Dashboard extends Component {
     }
 
     render() {
-        let { theme, account, price } = this.props;
-
+        let { theme, price } = this.props;
+        // TODO account total undefined when leaving and returning to page
+        let account = accountDataService.getAccountData()
         const AssetTableCard = GeodowLoadable({
             loader: () => import("./shared/AssetTableCard")
         });
