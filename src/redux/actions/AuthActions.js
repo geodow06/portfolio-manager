@@ -23,7 +23,7 @@ export function initAuthFromCallbackURI (callbackHref) {
 
           // Upons successful login set user details in state and local storage
           // dispatch(setUserData(user));
-          authService.loginWithTokenNew(token).then(user => {
+          authService.loginWithSessionToken(token).then(user => {
             dispatch(setUserData(user));
           })
           
@@ -67,21 +67,21 @@ export function loginWithUsernameAndPassword({ username, password }) {
       });
 
       try {
-          let user = authService.loginWithUsernameAndPassword(username, password);
-       
-          // Upons successful login set user details in state and local storage
-          dispatch(setUserData(user));
           
-          // Upon SUCCESSFUL login get and set the users account data
-          // Both in state and localstorage
-          dispatch(setAccountData());
+        let user = authService.loginWithUsernameAndPassword(username, password);
+       
+        // Upons successful login set user details in state and local storage
+        dispatch(setUserData(user));
+          
+        // Upon SUCCESSFUL login get and set the users account data
+        // Both in state and localstorage
+        dispatch(setAccountData());
 
-          // Redirect to home on successful login
-          dispatch(push({ pathname: "/"}));
+        // Redirect to home on successful login
+        // TODO - remove once login with username and password integrated with redux   
+        dispatch(push({ pathname: "/"}));
 
-          return dispatch({
-              type: AUTHENTICATION_SUCCESS
-          });
+        return dispatch({type: AUTHENTICATION_SUCCESS});
           
       } catch(error) {
           console.log(error);

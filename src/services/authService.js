@@ -1,13 +1,22 @@
 import JwtToken from "auth/JwtToken";
 import localStorageService from "./localStorageService";
+import { getMockAccessToken, decodeToken, getMockIdToken, getMockRefreshToken } from "utils/auth/tokenUtils";
 
 class AuthService {
 
     // Mock authenticated user response
-    authenticatedUser = {
+    
+
+    dummyAuthenticatedUser = {
         username:"JohnDoe",
         role:"ADMIN",
-        token: {token:"correctdummy"}
+        token: {
+            access_token : getMockAccessToken(),
+            expires_in: "dummy",
+            id_token : getMockIdToken(),
+            refresh_token : getMockRefreshToken(),
+            token_type: "Bearer"
+        }
     };
 
     loginWithUsernameAndPassword = (username, password) => {
@@ -16,9 +25,9 @@ class AuthService {
         if(password === "go") {
             // API returns token
             // Set token and user details
-            let user = {...this.authenticatedUser, username}
+            let user = {...this.dummyAuthenticatedUser, username}
             // Set token in local storage
-            this.setToken(user.token);
+            this.setSession(user.token);
             // Set user in local storage
             this.setUser(user);
 
@@ -26,19 +35,6 @@ class AuthService {
         } else {
             throw "Failed to authenticate";
         }
-    };
-
-    loginWithToken = () => {
-        // Check local storage for token
-        console.log(localStorageService.getToken().token)
-        console.log("Log in with token")
-        console.log(localStorageService.getToken().token !== "correctdummy")
-        if( localStorageService.getToken().token !== "correctdummy") {
-            throw "Token invalid";
-        }
-        // TODO Mock API return
-        console.log("Token valid")
-        return this.authenticatedUser;
     };
     
     validateToken = (token) => {
@@ -54,15 +50,6 @@ class AuthService {
         return {valid: false, error: "Not session invalid"}
     }
 
-    // Set accepted token in local storage
-    setToken = token => {
-        if (token) {
-            localStorageService.setItem("jwt_token", token);
-        } else {
-            localStorageService.removeItem("jwt_token");
-        }
-    };
-
     // Set the session token in local storage
     setSession = session => {
         if (session) {
@@ -75,13 +62,13 @@ class AuthService {
 
     // TODO
     getUserDataFromToken = token => {
-        return this.authenticatedUser;
+        return this.dummyAuthenticatedUser;
     }
 
     // If session is valid
     // Return Promise to get authenticated user data
     // Else return null promise
-    loginWithTokenNew = async token => {
+    loginWithSessionToken = async token => {
         // If token is passed validate
         if(token) {
             if(this.validateToken(token)) {

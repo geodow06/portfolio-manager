@@ -39,7 +39,7 @@ class AuthNew extends Component {
             return;
         }
         // Attempt to login with token
-        authService.loginWithTokenNew(null).then(user => {
+        authService.loginWithSessionToken(null).then(user => {
             console.log("Success logging in with token now setting state")
             if (user) {
                 this.setState({
