@@ -1,9 +1,5 @@
 import {cognitoAxios} from "config/axios";
-import axios from "axios";
-// const cognitoAuthService = {
-//     // authorize,
-//     token
-// }
+
 class CognitoService {
     
     getToken = async (code) => {
@@ -12,7 +8,6 @@ class CognitoService {
         params.append("client_id", process.env.REACT_APP_COGNITO_CLIENT_ID)
         params.append("code", code)
         params.append("redirect_uri", process.env.REACT_APP_COGNITO_CALLBACK_URL)
-        // console.log(`The code again ${code}`)
         
         return cognitoAxios({
             method: "POST",
