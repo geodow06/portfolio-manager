@@ -13,17 +13,14 @@ export const LOGOUT = "LOGOUT";
   
 // Initialise the OAuth sesson from a callback href
 export function initAuthFromCallbackURI (callbackHref) {
-
   return function (dispatch) {
 
       const code = parseCallBackUri(callbackHref);
 
       return cognitoService.getToken(code)
         .then((token) => {
-
-          // Upons successful login set user details in state and local storage
-          // dispatch(setUserData(user));
-          authService.loginWithSessionToken(token).then(user => {
+         
+          authService.loginWithCognitoSession(token, "cognito").then(user => {
             dispatch(setUserData(user));
           })
           

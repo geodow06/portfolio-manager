@@ -1,16 +1,15 @@
 import { Buffer } from 'buffer';
-
+import { verifyToken } from "utils/auth/tokenUtils";
 
 export default class JwtToken {
 
-	constructor(token) {
+	constructor(token, type) {
 		// Assign object
+		this.type = type;
 		this.jwtToken = token || '';
-		this.payload = this.decodePayload();
-	}
-
-	getJwtToken() {
-		return this.jwtToken;
+		let { header, payload } = this.decodeToken();
+		this.header = header;
+		this.payload = payload;
 	}
 
 	getExpiration() {
@@ -21,21 +20,30 @@ export default class JwtToken {
 		return this.payload.iat;
 	}
 
-	decodePayload() {
-		const payload = this.jwtToken.split('.')[1];
+	decodeToken() {
+		const encodedComponentsArray = this.jwtToken.split(".");
+		return {
+			header: this.base64DecodeJson(encodedComponentsArray[0]),
+			payload: this.base64DecodeJson(encodedComponentsArray[1])
+		};
+	}
+
+	base64DecodeJson ( encodedObject ) {
 		try {
-			return JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
-		} catch (err) {
+			return JSON.parse(Buffer.from(encodedObject, 'base64').toString('utf8'));
+		} catch (error) {
+			console.log(error)
 			return {};
 		}
 	}
 
 	isValid() {
 		// If current time is below expiry token is valid
-		if (Math.round(Date.now() / 1000) < this.payload.exp) {
-			return true;
-		}
-
-		return false;
+		// && verifyToken(this.token) add once confirmed secret from aws
+		// And added to .env
+		// if (Math.round(Date.now() / 1000) < this.payload.exp) {
+		// 	return true;
+		// }
+		return verifyToken ? true : false;
 	}
 }

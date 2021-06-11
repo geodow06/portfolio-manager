@@ -1,5 +1,6 @@
 import JwtToken from "auth/JwtToken";
-import { create, verify } from "njwt";
+import CognitoSession from "auth/CognitoSession";
+import jwt from "jsonwebtoken";
 
 let dummyAccessClaims = {
     "sub": "dummy",
@@ -39,10 +40,8 @@ let dummyIdClaims = {
 
 let dummyRefresh = "cmVmcmVzaA==" // "refresh"
 
-export const encodeToken = ( claims, secret, alg = "HS512" ) => {
-    //   base64 encoding i.e. compact function not working for RS2 Algs
-    const jwt = create(claims, secret, "HS512");
-    return jwt.compact();
+export const signToken = (payload, secretOrPrivateKey) => {
+    return jwt.sign(payload, secretOrPrivateKey);
 }
 
 // Returns JWT object
@@ -50,20 +49,36 @@ export const decodeToken = ( encodedToken ) => {
     return new JwtToken(encodedToken);
 }
 
-export const verifyToken = (encodedToken, secret, alg) => {
-    return verify(encodedToken, secret, alg);
+export const verifyToken = (token, secretOrKey) => {
+    try {
+        return jwt.verify(token.jwtToken, secretOrKey);
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 }
 
+
 export const getMockAccessToken = () => {
-    return encodeToken( dummyAccessClaims, "dummy" );
+    return signToken( dummyAccessClaims, "dummy" );
 }
 
 export const getMockIdToken = () => {
-    return encodeToken( dummyIdClaims, "dummy" );
+    return signToken( dummyIdClaims, "dummy" );
 }
 
 export const getMockRefreshToken = () => {
     return dummyRefresh;
+}
+
+export const getMockCognitoSession = () => {
+    return new CognitoSession({
+        access_token : getMockAccessToken(),
+        expires_in: "dummy",
+        id_token : getMockIdToken(),
+        refresh_token : getMockRefreshToken(),
+        token_type: "Bearer"
+    })
 }
 
 // TODO base64 encoder

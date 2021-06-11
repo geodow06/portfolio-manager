@@ -37,7 +37,7 @@ class SignIn extends Component {
         })
     };
 
-    handleSubmit = event => {
+    handleSubmit = () => {
         this.props.loginWithUsernameAndPassword({ ...this.state });
     };
 

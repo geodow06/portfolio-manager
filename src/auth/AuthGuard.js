@@ -20,7 +20,6 @@ class AuthGuard extends Component {
 
     componentDidMount() {
         // If not authorized redirect
-        console.log("mounted")
         if (!this.state.authorized) {
             this.redirectRoute(this.props);
         }

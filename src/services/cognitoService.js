@@ -1,4 +1,6 @@
 import {cognitoAxios} from "config/axios";
+import axios from "axios";
+import { verifyToken } from "utils/auth/tokenUtils";
 
 class CognitoService {
     
@@ -17,10 +19,30 @@ class CognitoService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: params
-        }).then(r => {return r.data});
+        }).then(response => response.data);
     }
 
-    
+    // Added to get verification
+    getJwks = async () => {
+        // Gets JWKs from user pool to be used for jwt verification
+        let keyArray = await axios.get(`${process.env.REACT_APP_COGNITO_JWKS_URI}`)
+            .then(response => response.data.keys);
+        // Transforms returned keys array into object with each key ids as keys
+        // i.e. {kid1: {...dataOfOne}, kid2: {...dataOfTwo}}
+        return keyArray.reduce(
+            function(result, item) {
+                let { kid, ...remaining } = item;
+                result[kid] = remaining;
+                return result;
+            }, {});
+    }
+
+    validateCognitoJwt = async token => {
+        let jwkToPem = require("jwk-to-pem");
+        let keysObject = this.getJwks();
+        let jwk = keysObject[token.header.kid];
+        return verifyToken(token, jwkToPem(jwk))
+    }
 }
 
 export default new CognitoService();
