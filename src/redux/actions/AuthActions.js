@@ -2,7 +2,6 @@ import cognitoService from "services/cognitoService";
 import { setUser, removeUser } from "redux/actions/UserActions";
 import { setAccountData } from "./AccountActions";
 import authService from "services/authService";
-import { push } from "connected-react-router";
 import { parseCallBackUri } from "utils/auth/oAuthUtils";
 import { clearSession, setReduxSession } from "redux/actions/SessionActions";
 
@@ -64,22 +63,8 @@ export function loginWithUsernameAndPassword({ username, password }) {
       });
 
       try {
-          
-        let user = authService.loginWithUsernameAndPassword(username, password);
-       
-        // Upons successful login set user details in state and local storage
-        dispatch(setUser(user));
-          
-        // Upon SUCCESSFUL login get and set the users account data
-        // Both in state and localstorage
-        dispatch(setAccountData());
 
-        // Redirect to home on successful login
-        // TODO - remove once login with username and password integrated with redux   
-        dispatch(push({ pathname: "/"}));
-
-        dispatch({type: AUTHENTICATION_SUCCESS});
-        dispatch(setReduxSession(user.token));
+        authService.loginWithUsernameAndPassword(username, password);
           
       } catch(error) {
           console.log(error);

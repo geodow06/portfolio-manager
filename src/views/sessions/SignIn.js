@@ -47,7 +47,7 @@ class SignIn extends Component {
 
     render() {
         let { username, password } = this.state;
-        let { classes } = this.props;
+        let { classes, auth } = this.props;
         return(
             <div className="signup flex flex-center w-100 h-100vh">
                 <div className="p-8">
@@ -60,6 +60,7 @@ class SignIn extends Component {
                             </Grid>
                             <Grid item lg={7} md={7} sm={7} xs={12}>
                                 <div className="p-36 h-100 bg-light-gray position-relative">
+                                { process.env.REACT_APP_AUTH_API &&
                                     <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                                         <TextValidator
                                             className="mb-24 w-100"
@@ -94,12 +95,12 @@ class SignIn extends Component {
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
-                                                    disabled={this.props.auth.loading}
+                                                    disabled={auth.loading}
                                                     type="submit"
                                                 >
                                                 Sign In
                                                 </Button>
-                                                {this.props.auth.loading && (
+                                                {auth.loading && (
                                                     <CircularProgress
                                                         size={24}
                                                         className={classes.buttonProgress}
@@ -108,12 +109,19 @@ class SignIn extends Component {
                                             </div>
                                         </div>
                                     </ValidatorForm>
+                                    }
+                                    { !process.env.REACT_APP_AUTH_API &&
+                                        <div>
+                                            Auth API currently not available
+                                            please use an OAuth provider
+                                        </div>
+                                    }
                                     {/* TODO - Implement OAuth provider list component to render each provider image */}
                                     <div className={classes.wrapper}>
                                         <div className="flex flex-middle mt-24">
                                             Or log in with a provider
                                             <Button 
-                                                    disabled={this.props.auth.loading}
+                                                    disabled={auth.loading}
                                                     onClick={this.handleOnClick}
                                                     type="onClick">
                                                     <img src={cognitoImage} className="size-36" alt="fgd" />

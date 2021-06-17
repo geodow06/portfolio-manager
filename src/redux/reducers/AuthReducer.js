@@ -8,10 +8,7 @@ import {
   const initialState = {
     isAuthenticated: false,
     loading: false,
-    loginError: {
-      username: null,
-      password: null
-    },
+    error: null,
     authenticationFailed: false
   }
   
@@ -41,7 +38,7 @@ import {
       case AUTHENTICATION_ERROR:
         return {
           ...initialState,
-          loginError: action.data,
+          error: action.payload,
           authenticationFailed: true
         };
   

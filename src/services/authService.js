@@ -1,16 +1,6 @@
 import localStorageService from "./localStorageService";
-import { getMockAccessToken, getMockIdToken, getMockRefreshToken, getMockCognitoSession } from "utils/auth/tokenUtils";
 import CognitoSession from "auth/CognitoSession";
 class AuthService {
-
-    // Mock authenticated session token
-    dummySessionToken = {
-            access_token : getMockAccessToken(),
-            expires_in: "dummy",
-            id_token : getMockIdToken(),
-            refresh_token : getMockRefreshToken(),
-            token_type: "Bearer"
-    };
     
     // Set the session token in local storage
     setSession = session => {
@@ -52,26 +42,10 @@ class AuthService {
         return Promise.resolve(false);
     }
 
-    // Due to lack of kid in token header will not be able to be verified on refresh
     loginWithUsernameAndPassword = (username, password) => {
         // TODO Add axios API calls
-        // Password confirmed
-        if(password === "go") {
-            // API returns token
-            // Set token and user details
-            let mockCognitoSession = getMockCognitoSession();
-            // Set token in local storage
-            const authUser = mockCognitoSession.getUserDetails();
-            
-            this.setSession(this.dummySessionToken);
-            // Set user in local storage
-            localStorageService.setItem("authenticated_user", authUser);
-
-            return authUser;
-        } 
-        
         // TODO Create error object
-        throw "Password Incorrect";
+        throw "Invalid password";
     };
 }
 
