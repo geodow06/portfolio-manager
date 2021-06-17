@@ -1,14 +1,22 @@
-import authService from "services/authService";
+import localStorageService from "services/localStorageService";
 
-export const SET_USER_DATA = "SET_USER_DATA";
-export const REMOVE_USER_DATA = "REMOVE_USER_DATE";
+export const SET_USER = "SET_USER";
+export const REMOVE_USER = "REMOVE_USER";
 
-export function setUserData(user) {
+export function setUser(user) {
     return dispatch => {
-        authService.setUser(user)
+        localStorageService.setItem("authenticated_user", user);
         dispatch({
-            type: SET_USER_DATA,
+            type: SET_USER,
             data: user
+        });
+    };
+}
+
+export function removeUser() {
+    return dispatch => {
+        dispatch({
+            type: REMOVE_USER
         });
     };
 }

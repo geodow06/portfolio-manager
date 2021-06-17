@@ -3,35 +3,15 @@ import { getMockAccessToken, getMockIdToken, getMockRefreshToken, getMockCognito
 import CognitoSession from "auth/CognitoSession";
 class AuthService {
 
-    // Mock authenticated user response
-    dummyAuthenticatedUser = {
-        username:"JohnDoe",
-        role:"ADMIN",
-        token: {
+    // Mock authenticated session token
+    dummySessionToken = {
             access_token : getMockAccessToken(),
             expires_in: "dummy",
             id_token : getMockIdToken(),
             refresh_token : getMockRefreshToken(),
             token_type: "Bearer"
-        }
     };
     
-    // TODO should be moved to tokenUtils
-    // Returns CognitoToken object or false otherwise
-    validateCognitoSession = (token) => {
-        if (token) {
-            return new CognitoSession(token);
-        }
-
-        return false;
-    }
-
-    // Returns CognitoToken object or false otherwise
-    validateStoredCognitoSession = () => {
-        let storedSession = localStorageService.getSession();
-        return this.validateCognitoSession(storedSession);
-    }
-
     // Set the session token in local storage
     setSession = session => {
         if (session) {
@@ -42,36 +22,37 @@ class AuthService {
         }
     }
 
-    // TODO
-    getUserDataFromSession = session => {
-        return this.dummyAuthenticatedUser;
-    }
-
-    // If session is valid
-    // Return Promise to get authenticated user data
-    // Else return null promise
-    // if more than one provider implement switch
+    // If valid token create, validate and set the session
+    // If no valid token attempt to do the same from local storage token
+    // Else return false i.e. invalid session
+    // If more than one provider implement switch
     loginWithCognitoSession = async (token, provider) => {
-        // If token is passed validate
+        
         if ( token ) {
-            let cognitoSession = this.validateCognitoSession(token);
-            if(cognitoSession) {
-                this.setSession(token);
-                const authUser = this.getUserDataFromSession(cognitoSession)
-                return Promise.resolve(authUser);
-            }
-        } 
-        let storedCognitoSession = this.validateStoredCognitoSession();
-        // If no token passed attempt to validate current session
-        if ( storedCognitoSession ) {
-            // Return the promise of function to get user data
-            const authUser = this.getUserDataFromSession(storedCognitoSession);
-            return Promise.resolve(authUser);
+            console.log("got here")
+            return this.validateAndSetCognitoSession(token);
         }
-        // Return null data to promise
-        return Promise.resolve(null);
+        let storedSession = localStorageService.getSession();
+        if(storedSession) {
+            return this.validateAndSetCognitoSession(storedSession);
+        }
+        return false;
     }
 
+    // Attempt to create a new CognitoSession from the provided token
+    // If successful and valid set the token in local storage
+    // Return the user details within the cognito session
+    validateAndSetCognitoSession = sessionToken => {
+        let cognitoSession = new CognitoSession(sessionToken);
+        if (cognitoSession && cognitoSession.isValid()) {
+            this.setSession(sessionToken);
+            return Promise.resolve(cognitoSession.getUserDetails());
+        }
+
+        return Promise.resolve(false);
+    }
+
+    // Due to lack of kid in token header will not be able to be verified on refresh
     loginWithUsernameAndPassword = (username, password) => {
         // TODO Add axios API calls
         // Password confirmed
@@ -79,30 +60,19 @@ class AuthService {
             // API returns token
             // Set token and user details
             let mockCognitoSession = getMockCognitoSession();
-            // let user = {...this.dummyAuthenticatedUser, username}
             // Set token in local storage
-            const authUser = this.getUserDataFromSession(mockCognitoSession);
+            const authUser = mockCognitoSession.getUserDetails();
             
-            this.setSession(authUser.token);
+            this.setSession(this.dummySessionToken);
             // Set user in local storage
-            this.setUser(authUser);
+            localStorageService.setItem("authenticated_user", authUser);
 
             return authUser;
-        } else {
-            // Create error object
-            throw "Password Incorrect";
-        }
+        } 
+        
+        // TODO Create error object
+        throw "Password Incorrect";
     };
-
-    // Save user to localstorage
-    setUser = (user) => {    
-        localStorageService.setItem("auth_user", user);
-    };
-    // Remove user from localstorage
-    removeUser = () => {
-        localStorageService.removeItem("auth_user");
-    };
-   
 }
 
 export default new AuthService();

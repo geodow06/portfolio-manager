@@ -14,13 +14,24 @@ export default class CognitoSession {
         accessToken = await cognitoService.validateCognitoJwt(this.accessToken).then(a => a);   
         idToken = await cognitoService.validateCognitoJwt(this.idToken).then(i => i);
 
-        console.log(accessToken);
-        console.log(idToken);
         if (!accessToken || !idToken) {
             console.log("Cognito token is invalid")
             return false;
         }
         console.log("Cognito token valid")
         return true;
+    }
+
+    getIdProperty = (propertyName) => {
+        return this.idToken.payload[propertyName];
+    }
+
+    getUserDetails = () => {
+        return {
+            roles: this.getIdProperty("cognito:groups"), 
+            username: this.getIdProperty("cognito:username"), 
+            phoneNumber: this.getIdProperty("phone_number"), 
+            email: this.getIdProperty("email")
+        };
     }
 }

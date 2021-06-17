@@ -44,10 +44,11 @@ class AuthGuard extends Component {
         const { location, user } = props;
         const { pathname } = location;
         const matched = state.routes.find(r => r.path === pathname);
-        const authorized = matched && matched.auth && matched.auth.length
-                // Check matched routes auth Array contains
-                // Users access role
-                ? matched.auth.includes(user.role)
+        const authorized = matched && matched.auth 
+                    && user && user.roles && user.roles.length
+                // Check authenticated user roles includes matched routes
+                // required role to authorize access
+                ? user.roles.includes(matched.auth)
                 : true;
         return {
             authorized

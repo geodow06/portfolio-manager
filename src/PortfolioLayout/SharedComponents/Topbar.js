@@ -25,7 +25,9 @@ class Topbar extends Component {
                         className={`topbar-hold ${className}`}
                         style={Object.assign({}, { backgroundColor: topbarTheme.palette.primary.main })}>
                         <div className="flex flex-space-between flex-middle h-100">
-                            <span className="m-auto"></span>             
+                            <span className="m-auto"></span>
+                            {/* TODO styling */}
+                            <div>{this.props.user.username}</div>         
                             <div className="flex flex-middle">
                                 <GeodowMenu
                                     menuButton = {
@@ -55,11 +57,13 @@ class Topbar extends Component {
 
 Topbar.propTypes = {
     settings: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    settings: state.layout.settings
+    settings: state.layout.settings,
+    user: state.user
 });
 
 const mapDispatchToProps = dispatch => ({

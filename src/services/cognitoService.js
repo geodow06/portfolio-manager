@@ -29,17 +29,18 @@ class CognitoService {
             .then(response => response.data.keys);
         // Transforms returned keys array into object with each key ids as keys
         // i.e. {kid1: {...dataOfOne}, kid2: {...dataOfTwo}}
-        return keyArray.reduce(
+        return Promise.resolve(keyArray.reduce(
             function(result, item) {
                 let { kid, ...remaining } = item;
                 result[kid] = remaining;
                 return result;
-            }, {});
+            }, {}));
     }
 
     validateCognitoJwt = async token => {
         let jwkToPem = require("jwk-to-pem");
-        let keysObject = this.getJwks();
+        // TODO clean up Promises
+        let keysObject = await this.getJwks();
         let jwk = keysObject[token.header.kid];
         return verifyToken(token, jwkToPem(jwk))
     }

@@ -38,12 +38,6 @@ export default class JwtToken {
 	}
 
 	isValid() {
-		// If current time is below expiry token is valid
-		// && verifyToken(this.token) add once confirmed secret from aws
-		// And added to .env
-		// if (Math.round(Date.now() / 1000) < this.payload.exp) {
-		// 	return true;
-		// }
-		return verifyToken ? true : false;
+		return verifyToken(this.token) ? true : false;
 	}
 }

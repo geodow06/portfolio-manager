@@ -5,6 +5,7 @@ import AppContext from "appContext";
 import { PropTypes } from "prop-types";
 import { push } from "connected-react-router";
 import authService from "services/authService";
+import { setUser } from "redux/actions/UserActions";
 
 class AuthNew extends Component {
     constructor(props, context) {
@@ -45,6 +46,7 @@ class AuthNew extends Component {
                 this.setState({
                     authenticated: true
                 })
+                this.props.setUser(user);
                 // If authenticated and the current page is the signin
                 // page redirect to dashboard
                 if(this.isRouteAttribute("signin")) {
@@ -85,7 +87,7 @@ class AuthNew extends Component {
 }
 
 AuthNew.propTypes = {
-    setAccountData: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired
 }
 
 AuthNew.contextType = AppContext;
@@ -96,6 +98,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProp = dispatch => ({
     pushTo: url => dispatch(push(url)),
+    setUser: user => dispatch(setUser(user))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProp)(AuthNew));
