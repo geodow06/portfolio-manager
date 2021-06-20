@@ -63,7 +63,7 @@ Dashboard.propTypes = {
     user: PropTypes.object.isRequired,
     account: PropTypes.object.isRequired,
     setPrices: PropTypes.func.isRequired,
-    price: PropTypes.func.isRequired
+    price: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

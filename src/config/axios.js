@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const cognitoAxios = axios.create({
+export const cognitoAxios = axios.create({
     baseUrl: process.env.REACT_APP_COGNITO_DOMAIN
 })
 
@@ -21,5 +21,3 @@ axios.interceptors.response.use(response => {
     console.log(error);
     return Promise.reject(error);
 });
-
-export {cognitoAxios}

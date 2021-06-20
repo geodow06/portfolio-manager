@@ -1,6 +1,6 @@
 import {cognitoAxios} from "config/axios";
 import axios from "axios";
-import { verifyToken } from "utils/auth/tokenUtils";
+import { verifyToken } from "utils";
 
 class CognitoService {
     

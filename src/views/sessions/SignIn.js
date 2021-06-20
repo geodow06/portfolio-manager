@@ -60,7 +60,6 @@ class SignIn extends Component {
                             </Grid>
                             <Grid item lg={7} md={7} sm={7} xs={12}>
                                 <div className="p-36 h-100 bg-light-gray position-relative">
-                                { process.env.REACT_APP_AUTH_API &&
                                     <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                                         <TextValidator
                                             className="mb-24 w-100"
@@ -109,13 +108,6 @@ class SignIn extends Component {
                                             </div>
                                         </div>
                                     </ValidatorForm>
-                                    }
-                                    { !process.env.REACT_APP_AUTH_API &&
-                                        <div>
-                                            Auth API currently not available
-                                            please use an OAuth provider
-                                        </div>
-                                    }
                                     {/* TODO - Implement OAuth provider list component to render each provider image */}
                                     <div className={classes.wrapper}>
                                         <div className="flex flex-middle mt-24">
@@ -141,8 +133,7 @@ class SignIn extends Component {
 SignIn.propTypes = {
     loginWithUsernameAndPassword: PropTypes.func.isRequired,
     setAccountData: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    attemptAuthentication: PropTypes.func.isRequired
+    auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

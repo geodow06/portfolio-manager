@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import { verifyToken } from "utils/auth/tokenUtils";
+import { verifyToken } from "utils";
 
 export default class JwtToken {
 

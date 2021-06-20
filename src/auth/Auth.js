@@ -6,6 +6,7 @@ import { PropTypes } from "prop-types";
 import { push } from "connected-react-router";
 import authService from "services/authService";
 import { setUser } from "redux/actions/UserActions";
+import { redirectTo } from "utils";
 
 class AuthNew extends Component {
     constructor(props, context) {
@@ -50,36 +51,21 @@ class AuthNew extends Component {
                 // If authenticated and the current page is the signin
                 // page redirect to dashboard
                 if(this.isRouteAttribute("signin")) {
-                    this.redirectToDashboard(this.props)
+                    redirectTo(this.props, "/")
                 }
             } else {
                 console.log("Unable to sign in")
-                this.redirectToSignin(this.props)
+                redirectTo(this.props, "/session/signin");
             }
         }).catch(error => {
             console.log(error);
             this.setState({
                 authenticated: false
             })
-            this.redirectToSignin(this.props)
+            redirectTo(this.props, "/session/signin");
         });
     }
-
-    // Redirect to dashboard route
-    redirectToDashboard(props) {
-        props.pushTo({
-            pathname: "/dashboard/home",
-        })
-    }
-
-    // Redirect to signin session route
-    redirectToSignin(props) {
-        
-        props.pushTo({
-            pathname: "/session/signin",
-        })
-    }
-
+    
     render() {
         const { children } = this.props;
         return <Fragment>{ children }</Fragment>;
