@@ -2,7 +2,7 @@ import {
     SET_LAYOUT_SETTINGS,
     SET_DEFAULT_LAYOUT_SETTINGS
   } from "redux/actions/LayoutActions";
-  import { PortfolioLayoutSettings } from "PortfolioLayout/settings";
+  import { PortfolioLayoutSettings } from "portfolioLayout/settings";
   
   const initialState = {
     settings: {
@@ -13,7 +13,7 @@ import {
     }
   };
   
-  const LayoutReducer = (state = initialState, action) => {
+  const LayoutReducer = ( state = initialState, action = {} ) => {
     switch (action.type) {
       case SET_LAYOUT_SETTINGS:
         return {

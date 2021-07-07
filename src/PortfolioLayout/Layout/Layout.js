@@ -6,9 +6,9 @@ import { withStyles } from "@material-ui/core";
 import { classList } from "utils";
 import { PropTypes } from "prop-types";
 import Scrollbar from "react-perfect-scrollbar";
-import Footer from "PortfolioLayout/SharedComponents/Footer";
-import Topbar from "PortfolioLayout/SharedComponents/Topbar";
-import LayoutSideNavbar from "PortfolioLayout/Layout/LayoutSideNavbar";
+import Footer from "portfolioLayout/SharedComponents/Footer";
+import Topbar from "portfolioLayout/SharedComponents/Topbar";
+import LayoutSideNavbar from "portfolioLayout/Layout/LayoutSideNavbar";
 
 const styles = theme => {
     return {

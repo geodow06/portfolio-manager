@@ -5,12 +5,10 @@ import { connect } from "react-redux";
 import { matchRoutes } from "react-router-config";
 import AppContext from "appContext";
 import {
-    setLayoutSettings,
-    setDefaultSettings
+    setLayoutSettings
 } from "redux/actions/LayoutActions";
 import { isEqual, merge } from "lodash";
 import { GeodowLoadable } from "geodow";
-import { isMdScreen } from "utils";
 
 class PortfolioLayout extends Component {
     constructor(props, context) {
@@ -55,7 +53,6 @@ class PortfolioLayout extends Component {
 
 const mapStateToProps = state => ({
     setLayoutSettings: PropTypes.func.isRequired,
-    setDefaultSettings: PropTypes.func.isRequired,
     settings: state.layout.settings,
     defaultSettings: state.layout.defaultSettings
 });
@@ -63,5 +60,5 @@ const mapStateToProps = state => ({
 PortfolioLayout.contextType = AppContext;
 
 export default withRouter(
-    connect(mapStateToProps, { setLayoutSettings, setDefaultSettings })(PortfolioLayout)
+    connect(mapStateToProps, { setLayoutSettings })(PortfolioLayout)
 )

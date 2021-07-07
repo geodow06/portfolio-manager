@@ -12,7 +12,7 @@ const initialState = {
     prices: {}
 };
 
-const PriceReducer = ( state = initialState, action ) => {
+const PriceReducer = ( state = initialState, action = {} ) => {
     
     switch (action.type) {
         case SET_PRICES_LOADING: {

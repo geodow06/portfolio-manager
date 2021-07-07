@@ -6,6 +6,7 @@ const GeodowLoadable = opts => {
       Object.assign(
         {
           loading: Loading,
+          // Delay stops loading flashing for fast loading components
           delay: 100,
           timeout: 1000
         },

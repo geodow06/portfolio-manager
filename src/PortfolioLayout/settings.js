@@ -1,7 +1,7 @@
 import { createMuiTheme } from "@material-ui/core";
 import { forEach, merge } from "lodash";
-import { themeColors } from "PortfolioLayout/Theme/themeColors";
-import themeOptions from "PortfolioLayout/Theme/themeOptions";
+import { themeColors } from "portfolioLayout/Theme/themeColors";
+import themeOptions from "portfolioLayout/Theme/themeOptions";
 
 function createPortfolioThemes() {
     let themes = {};

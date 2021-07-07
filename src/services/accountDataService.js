@@ -59,12 +59,9 @@ class AccountService {
 
     getAccountData = () => {
         let sessionData = localStorageService.getItem("data");
-        if (sessionData) {
-            return sessionData;
-        };
         
-        // API Call retrieves data
-        return this.account;
+        // TODO - add API call
+        return sessionData ? sessionData : this.account
     };
 
     getCoinbaseProductIds = () => {

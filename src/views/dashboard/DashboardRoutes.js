@@ -9,7 +9,7 @@ const dashboardRoutes = [
     {
         path: "/dashboard/home",
         component: Dashboard,
-        auth: authRoles.admin
+        auth: authRoles.employee
     }
 ];
 

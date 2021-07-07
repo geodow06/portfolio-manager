@@ -5,7 +5,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { MenuItem } from "@material-ui/core";
 import userImage from "assets/images/rogers.jpg";
-import { logoutUser } from "redux/actions/UserActions";
+import { logout } from "redux/actions/AuthActions";
 import GeodowMenu from "geodow/components/GeodowMenu";
 
 const styles = theme => ({
@@ -25,7 +25,9 @@ class Topbar extends Component {
                         className={`topbar-hold ${className}`}
                         style={Object.assign({}, { backgroundColor: topbarTheme.palette.primary.main })}>
                         <div className="flex flex-space-between flex-middle h-100">
-                            <span className="m-auto"></span>             
+                            <span className="m-auto"></span>
+                            {/* TODO styling */}
+                            <div>{this.props.user.username}</div>         
                             <div className="flex flex-middle">
                                 <GeodowMenu
                                     menuButton = {
@@ -37,7 +39,7 @@ class Topbar extends Component {
                                     }
                                 >    
                                     <MenuItem 
-                                        onClick={() => this.props.logoutUser()}
+                                        onClick={() => this.props.logout()}
                                         className="flex flex-middle"
                                         style={{ minWidth: 185 }}>
                                             <Icon> power_settings_new </Icon>
@@ -55,15 +57,17 @@ class Topbar extends Component {
 
 Topbar.propTypes = {
     settings: PropTypes.object.isRequired,
-    logoutUser: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    settings: state.layout.settings
+    settings: state.layout.settings,
+    user: state.user
 });
 
 const mapDispatchToProps = dispatch => ({
-    logoutUser: () => dispatch(logoutUser())
+    logout: () => dispatch(logout())
 })
 
 export default withStyles(styles, { withTheme: true })(

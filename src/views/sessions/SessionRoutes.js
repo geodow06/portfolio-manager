@@ -1,3 +1,4 @@
+import Callback from "./Callback";
 import NotFound from "./NotFound";
 import SignIn from "./SignIn";
 
@@ -21,7 +22,7 @@ const settings = {
 };
 
 // TODO
-// Add SignIn, SignUp, ForgotPassword
+// Add SignUp, ForgotPassword
 const sessionRoutes = [
     {
       path: "/session/404",
@@ -31,6 +32,13 @@ const sessionRoutes = [
     {
       path: "/session/signin",
       component: SignIn,
+      signin: true,
+      settings
+    },
+    {
+      path: "/session/callback",
+      component: Callback,
+      callback: true,
       settings
     }
 ];
