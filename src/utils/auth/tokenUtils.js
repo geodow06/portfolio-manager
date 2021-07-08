@@ -1,4 +1,3 @@
-import JwtToken from "auth/JwtToken";
 import CognitoSession from "auth/CognitoSession";
 import jwt from "jsonwebtoken";
 
@@ -74,6 +73,25 @@ export const getMockCognitoSession = () => {
         refresh_token : getMockRefreshToken(),
         token_type: "Bearer"
     })
+}
+
+/** 
+ * Transforms JWK Object Array to Object with child objects with corresponding kid as root prop
+ * 
+ * @param {Object[]} keyArray - JWK Array
+ * @return {Object} - Object
+ * 
+ * [{kid:"firstKeyId", ...remainingProps}, {kid: "secondKeyId", ...remainingProps}, ....]
+ * 
+ * {kid1: {...remainingProps}, kid2: {...remainingProps}, ....} 
+*/
+export const JWKArrayToObject = (keyArray) => {
+    return keyArray.reduce(
+        (result, item) => {
+            let { kid, ...remaining } = item;
+            result[kid] = remaining;
+            return result;
+        }, {});
 }
 
 // TODO base64 encoder
