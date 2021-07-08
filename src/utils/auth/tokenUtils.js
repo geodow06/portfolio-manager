@@ -44,11 +44,6 @@ export const signToken = (payload, secretOrPrivateKey) => {
     return jwt.sign(payload, secretOrPrivateKey);
 }
 
-// Returns JWT object
-export const decodeToken = ( encodedToken ) => {
-    return new JwtToken(encodedToken);
-}
-
 export const verifyToken = (token, secretOrKey) => {
     try {
         return jwt.verify(token.jwtToken, secretOrKey);
