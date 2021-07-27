@@ -1,4 +1,4 @@
-import { JWKArrayToObject } from "utils";
+import { jwkArrayToObject } from "utils";
 import chai from 'chai';
 
 const dummyJWKArray = [
@@ -27,7 +27,7 @@ const correctlyFormattedJWKObject = {
 describe('tokenUtils unit tests', () => {
     describe('formatJWKArray tests', () => {
         it('Should correctly format JWK array to object', () => {
-            chai.expect(JWKArrayToObject(dummyJWKArray)).to.deep.equal(correctlyFormattedJWKObject);
+            chai.expect(jwkArrayToObject(dummyJWKArray)).to.deep.equal(correctlyFormattedJWKObject);
         });
     })
 });

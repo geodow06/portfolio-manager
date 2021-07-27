@@ -1,5 +1,10 @@
-import CognitoSession from "auth/CognitoSession";
+/** @module utils/auth/tokenUtils */
+
+// TODO - Remove dummy/mock data creation from tokenUtils module
+import CognitoSession from "auth/cognito/CognitoSession";
 import jwt from "jsonwebtoken";
+import { Buffer } from 'buffer';
+import { JWTVerificationException } from "exceptions";
 
 let dummyAccessClaims = {
     "sub": "dummy",
@@ -43,12 +48,20 @@ export const signToken = (payload, secretOrPrivateKey) => {
     return jwt.sign(payload, secretOrPrivateKey);
 }
 
-export const verifyToken = (token, secretOrKey) => {
+// TODO add typedef for JWT class
+/** 
+ * Verifies token and returns decrypted payload if succesful
+ * else throws error
+ * @method
+ * @param {object} token - CognitoJWT class object containing payload to be verified
+ * @param {string} secretOrKey - Private key or secret with which to attempt verification
+ * @return {object}
+ */
+export const verifyToken = (base64EncodedJWT, secretOrKey) => {
     try {
-        return jwt.verify(token.jwtToken, secretOrKey);
-    } catch (error) {
-        console.log(error);
-        return false;
+    return jwt.verify(base64EncodedJWT, secretOrKey);
+    } catch(error) {
+     throw new JWTVerificationException(error);
     }
 }
 
@@ -77,15 +90,16 @@ export const getMockCognitoSession = () => {
 
 /** 
  * Transforms JWK Object Array to Object with child objects with corresponding kid as root prop
- * 
+ * @method
  * @param {Object[]} keyArray - JWK Array
+ * 
+ * Example input - [{kid:"firstKeyId", ...remainingProps}, {kid: "secondKeyId", ...remainingProps}, ....]
+ * 
  * @return {Object} - Object
  * 
- * [{kid:"firstKeyId", ...remainingProps}, {kid: "secondKeyId", ...remainingProps}, ....]
- * 
- * {kid1: {...remainingProps}, kid2: {...remainingProps}, ....} 
-*/
-export const JWKArrayToObject = (keyArray) => {
+ * Example output - {kid1: {...remainingProps}, kid2: {...remainingProps}, ....} 
+ */
+export const jwkArrayToObject = keyArray => {
     return keyArray.reduce(
         (result, item) => {
             let { kid, ...remaining } = item;
@@ -96,5 +110,32 @@ export const JWKArrayToObject = (keyArray) => {
 
 // TODO base64 encoder
 
-// TODO base 64 decoder and implement in JwtToken class "decodePayload"
+/**
+ * @method
+ * @param {string} encodedJsonObject
+ * @returns {object} decoded JSON object
+ */
+export const base64DecodeJson = encodedObject => {
+    try {
+        return JSON.parse(Buffer.from(encodedObject, 'base64').toString('utf8'));
+    } catch (error) {
+        console.log(error)
+        return {};
+    }
+}
+
+/**
+ * Decodes the token header and payload
+ * @method
+ * @param {object} encodedJWTToken - The encoded JWT token
+ * @return {object} - object containing the decoded header and payload
+ */
+export const decodeJWTHeaderAndPayload = encodedJWTToken => {
+    const encodedComponentsArray = encodedJWTToken.split(".");
+    // TODO check for decoded array length
+    return {
+        header: base64DecodeJson(encodedComponentsArray[0]),
+        payload: base64DecodeJson(encodedComponentsArray[1])
+    };
+}
   

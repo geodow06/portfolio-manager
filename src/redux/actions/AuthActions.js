@@ -1,4 +1,4 @@
-import cognitoService from "services/cognitoService";
+import { getToken } from "services/cognitoService";
 import { setUser, removeUser } from "redux/actions/UserActions";
 import { setAccountData } from "./AccountActions";
 import authService from "services/authService";
@@ -24,7 +24,7 @@ export function initAuthFromCallbackURI (callbackHref) {
       });
     }
     
-    return cognitoService.getToken(code)
+    return getToken(code)
       .then((token) => {
         
         authService.loginWithCognitoSession(token, "cognito").then(user => {

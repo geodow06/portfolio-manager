@@ -1,5 +1,5 @@
 import localStorageService from "./localStorageService";
-import CognitoSession from "auth/CognitoSession";
+import CognitoSession from "auth/cognito/CognitoSession";
 class AuthService {
     
     // Set the session token in local storage
@@ -19,7 +19,6 @@ class AuthService {
     loginWithCognitoSession = async (token, provider) => {
         
         if ( token ) {
-            console.log("got here")
             return this.validateAndSetCognitoSession(token);
         }
         let storedSession = localStorageService.getSession();
