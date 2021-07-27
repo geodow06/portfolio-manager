@@ -115,7 +115,7 @@ export const jwkArrayToObject = keyArray => {
  * @param {string} encodedJsonObject
  * @returns {object} decoded JSON object
  */
-export const base64DecodeJson = encodedObject => {
+export const base64DecodeJSON = encodedObject => {
     try {
         return JSON.parse(Buffer.from(encodedObject, 'base64').toString('utf8'));
     } catch (error) {
@@ -134,8 +134,8 @@ export const decodeJWTHeaderAndPayload = encodedJWTToken => {
     const encodedComponentsArray = encodedJWTToken.split(".");
     // TODO check for decoded array length
     return {
-        header: base64DecodeJson(encodedComponentsArray[0]),
-        payload: base64DecodeJson(encodedComponentsArray[1])
+        header: base64DecodeJSON(encodedComponentsArray[0]),
+        payload: base64DecodeJSON(encodedComponentsArray[1])
     };
 }
   

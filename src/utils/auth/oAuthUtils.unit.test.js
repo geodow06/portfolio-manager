@@ -1,6 +1,7 @@
 import { parseCallBackUri } from "utils";
 import { RegexMatchException, MissingUriParameterException } from "exceptions";
 import chai from 'chai';
+
 const validCode = "972de19d-6f21-4b92-9a17-4e21f5de1ed8";
 const malformedCode = "972de9d-6f21-4b92-9a17-4e21f5de1ed8";
 

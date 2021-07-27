@@ -1,4 +1,4 @@
-import { jwkArrayToObject } from "utils";
+import { jwkArrayToObject, base64DecodeJSON } from "utils";
 import chai from 'chai';
 
 const dummyJWKArray = [
@@ -29,5 +29,11 @@ describe('tokenUtils unit tests', () => {
         it('Should correctly format JWK array to object', () => {
             chai.expect(jwkArrayToObject(dummyJWKArray)).to.deep.equal(correctlyFormattedJWKObject);
         });
-    })
+    });
+    describe('base64DecodeJSON test', () => {
+        it('Should return empty object for malformed JSON', () => {
+            const emptyObject = {};
+            chai.expect(base64DecodeJSON(emptyObject)).to.be.empty;
+        });
+    });
 });
