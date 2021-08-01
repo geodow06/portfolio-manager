@@ -1,5 +1,5 @@
 import { RegexMatchException, MissingUriParameterException } from "exceptions";
-export const parseCallBackUri = (href, done) => {
+export const parseCallBackUri = href => {
     // Return code parameter from callback uri
     let indexOf = href.lastIndexOf('code=');
     // If code= does not exist in uri throw NoCodeParameterError
