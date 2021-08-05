@@ -38,6 +38,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "sonar": "node sonar-project.js",
     "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
     "eject": "react-scripts eject",
     "docs": "jsdoc -c jsdoc.conf.json"
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "better-docs": "^2.3.2",
-    "jsdoc": "^3.6.7"
+    "jsdoc": "^3.6.7",
+    "sonarqube-scanner": "^2.8.1"
   }
 }
