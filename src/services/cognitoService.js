@@ -51,13 +51,11 @@ export const validateCognitoJwt = token => {
     let jwkToPem = require("jwk-to-pem");
 
     return new Promise((resolve, reject) => {
-        try {
-            getJWKs().then(keysObject => {
-                resolve(verifyToken(token.encodedToken, jwkToPem(keysObject[token.decodedHeader.kid])));
-            });
-        } catch(error) {
+        getJWKs().then(keysObject => {
+            resolve(verifyToken(token.encodedToken, jwkToPem(keysObject[token.decodedHeader.kid])));
+        }).catch(error => {
             console.log(error);
             reject(error);
-        }
+        });
     });
 }
