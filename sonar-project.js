@@ -5,6 +5,7 @@ sonarqubeScanner({
   serverUrl: 'http://localhost:9000',
   options : {
   'sonar.sources': '.',
-  'sonar.inclusions' : 'src/**' // Entry point of your code
+  'sonar.inclusions' : 'src/**', // Entry point of your code
+  'sonar.exclusions' : 'src/**/*.test.js' // Ignore test files
   }
 }, () => {});

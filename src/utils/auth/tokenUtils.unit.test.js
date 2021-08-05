@@ -1,10 +1,13 @@
 import { 
     jwkArrayToObject, 
     base64DecodeJSON, 
-    decodeJWTHeaderAndPayload 
+    decodeJWTHeaderAndPayload,
+    signToken,
+    verifyToken
 } from "utils";
 import * as constants from "utils/auth/constants";
 import chai from 'chai';
+import { JWTVerificationException } from "exceptions";
 
 describe('tokenUtils unit tests', () => {
     // formatJWKArray tests
@@ -24,7 +27,7 @@ describe('tokenUtils unit tests', () => {
         });
     });
 
-    // signToken tests
+    // decodeJWTHeaderAndPayload tests
     describe('decodeJWTHeaderAndPayload tests', () => {
         const decodedToken = decodeJWTHeaderAndPayload(constants.testJWT);
         it('Should return oject with header and payload props', () => {
@@ -35,6 +38,30 @@ describe('tokenUtils unit tests', () => {
         });
         it('Should return an object with the JWT payload correctly decoded', () => {
             chai.expect(decodedToken.payload).to.include(constants.testDecodedJWTPayload);
+        });
+    });
+
+    // signToken tests
+    describe('signToken tests', () => {
+        it('Should return a base64Encoded JWT token of the correct form', () => {
+            const signedToken = signToken(constants.testDecodedJWTPayload, constants.test256Secret);
+            chai.assert.match(signedToken, constants.jwtRegex);
+        })
+    });
+
+    // verifyToken tests
+    describe('verifyToken tests', () => {
+        it('Should return the JWT payload without iat for correct key', () => {
+            const signedToken = signToken(constants.testDecodedJWTPayload, constants.test256Secret);
+            console.log(signedToken)
+            const verifyResponse = verifyToken(signedToken, constants.test256Secret);
+            const verifiedPayload = constants.testDecodedJWTPayload;
+            chai.expect(verifyResponse).to.deep.equal(verifiedPayload);
+        });
+        it('Should throw a new JWTVerificationError for incorrect key', () => {
+            const signedToken = signToken(constants.testDecodedJWTPayload, constants.test256Secret);
+            const testFunciton = () => { verifyToken(signedToken, "incorrectkey") }
+            chai.expect(testFunciton).to.throw(JWTVerificationException, /invalid signature/);
         });
     });
 });

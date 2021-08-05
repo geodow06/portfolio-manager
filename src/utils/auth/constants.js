@@ -31,15 +31,19 @@ export const test64DecodedJSON = {
 };
 
 export const testJWT = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoxNDI2NDIwODAwLCJodHRwOi8vdG9wdGFsLmNvbS9qd3RfY2xhaW1zL2lzX2FkbWluIjp0cnVlLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZX0.
-yRQYnWzskCZUxPwaQupWkiUzKELZ49eM7oWxAQK_ZXw`;
+eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoyODAwMDAwMDAwLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZSwiaWF0IjoxNjI4MTk4OTU2fQ.
+A1RWiplPm5KfJTAC-YrIiYYl4whzGTTMUFvSDXboCsA`;
 
 export const testDecodedJWTHeader = { alg: 'HS256', typ: 'JWT' };
 
 export const testDecodedJWTPayload = {
     iss: 'toptal.com',
-    exp: 1426420800,
-    'http://toptal.com/jwt_claims/is_admin': true,
+    "exp": 2800000000,
     company: 'Toptal',
-    awesome: true
+    awesome: true,
+    "iat": 1628198956
 }
+
+export const test256Secret = "hello";
+
+export const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
