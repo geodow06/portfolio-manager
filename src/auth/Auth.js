@@ -8,7 +8,7 @@ import authService from "services/authService";
 import { setUser } from "redux/actions/UserActions";
 import { redirectTo } from "utils";
 
-class AuthNew extends Component {
+class Auth extends Component {
     constructor(props, context) {
         super(props);
         let { routes } = context;
@@ -34,24 +34,24 @@ class AuthNew extends Component {
     }
 
     checkJwtAuth = () => {
-        console.log("checking auth")
+        console.log("checking auth");
         // If the route has the callback attribute do nothing
         if(this.isRouteAttribute("callback")) {
-            console.log("Is callback ignore auth check")
+            console.log("Is callback, ignore auth check");
             return;
         }
         // Attempt to login with token
         authService.loginWithCognitoSession(null).then(user => {
-            console.log("Success logging in with token now setting state")
+            console.log("Success logging in with token, now setting state");
             if (user) {
                 this.setState({
                     authenticated: true
-                })
+                });
                 this.props.setUser(user);
                 // If authenticated and the current page is the signin
                 // page redirect to dashboard
                 if(this.isRouteAttribute("signin")) {
-                    redirectTo(this.props, "/")
+                    redirectTo(this.props, "/");
                 }
             } else {
                 console.log("Unable to sign in")
@@ -61,7 +61,7 @@ class AuthNew extends Component {
             console.log(error);
             this.setState({
                 authenticated: false
-            })
+            });
             redirectTo(this.props, "/session/signin");
         });
     }
@@ -72,11 +72,11 @@ class AuthNew extends Component {
     }
 }
 
-AuthNew.propTypes = {
+Auth.propTypes = {
     setUser: PropTypes.func.isRequired
-}
+};
 
-AuthNew.contextType = AppContext;
+Auth.contextType = AppContext;
 
 const mapStateToProps = state => ({
     // user: state.user
@@ -87,4 +87,4 @@ const mapDispatchToProp = dispatch => ({
     setUser: user => dispatch(setUser(user))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProp)(AuthNew));
+export default withRouter(connect(mapStateToProps, mapDispatchToProp)(Auth));
