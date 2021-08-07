@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import React, { Component } from 'react';
 import { withStyles, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import StatsCards from "views/dashboard/shared/StatsCards";
-import AssetTableCard from "./shared/AssetTableCard";
 import BreakdownChartCard from "./shared/BreakdownChartCard";
+import StatsCards from "./shared/StatsCards";
 import CoinbaseWebSocket from "websocket/CoinbaseWebSocket";
 import { setPrices } from "redux/actions/PriceActions";
 import accountDataService from "services/accountDataService";
-
+import GeodowLoadable from "geodow/components/geodowLoadable/GeodowLoadable";
 class Dashboard extends Component {
 
     socket = {};
@@ -26,6 +25,8 @@ class Dashboard extends Component {
         this.interval = setInterval(() => this.props.setPrices(this.socket.getTickerPrices()), 1000);
     }
 
+    // TODO - interval causing re-rendering even when no price data
+
     componentWillUnmount = () => {
         // Teardown - close websocket and clear interval on component unmount
         this.socket.close();
@@ -33,15 +34,20 @@ class Dashboard extends Component {
     }
 
     render() {
-        let { theme, account, price } = this.props;
-        let assets = account.assets;
+        let { theme, price } = this.props;
+        // TODO account total undefined when leaving and returning to page
+        let account = accountDataService.getAccountData()
+        const AssetTableCard = GeodowLoadable({
+            loader: () => import("./shared/AssetTableCard")
+        });
+        
         return (
             <div className="dashboard m-sm-30 ">
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <StatsCards balance={account.total.fiatValue.usd} changes={account.total.changes} theme={theme}/>
 
-                        {price.success ? <AssetTableCard assets={assets} tickerPrices={price.prices}/>: <div>loading</div>}
+                        <AssetTableCard assets={account.assets} tickerPrices={price.prices}/>
 
                     </Grid>
                     <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -57,7 +63,7 @@ Dashboard.propTypes = {
     user: PropTypes.object.isRequired,
     account: PropTypes.object.isRequired,
     setPrices: PropTypes.func.isRequired,
-    price: PropTypes.func.isRequired
+    price: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

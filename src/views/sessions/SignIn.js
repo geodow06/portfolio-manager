@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { loginWithUsernameAndPassword } from "redux/actions/LoginActions";
 import { setAccountData } from "redux/actions/AccountActions";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
-import { logoutUser } from "redux/actions/UserActions";
+import cognitoImage from "assets/images/cognito.png"
+import { loginWithUsernameAndPassword, attemptOAuthAuthentication } from "redux/actions/AuthActions";
 
 const styles = theme => ({
     wrapper: {
@@ -37,14 +37,17 @@ class SignIn extends Component {
         })
     };
 
-    handleSubmit = event => {
+    handleSubmit = () => {
         this.props.loginWithUsernameAndPassword({ ...this.state });
-        // this.props.setAccountData({ ...this.state });
     };
+
+    handleOnClick = event => {
+        this.props.attemptOAuthAuthentication("cognito");
+    }
 
     render() {
         let { username, password } = this.state;
-        let { classes } = this.props;
+        let { classes, auth } = this.props;
         return(
             <div className="signup flex flex-center w-100 h-100vh">
                 <div className="p-8">
@@ -91,12 +94,12 @@ class SignIn extends Component {
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
-                                                    disabled={this.props.login.loading}
+                                                    disabled={auth.loading}
                                                     type="submit"
                                                 >
                                                 Sign In
                                                 </Button>
-                                                {this.props.login.loading && (
+                                                {auth.loading && (
                                                     <CircularProgress
                                                         size={24}
                                                         className={classes.buttonProgress}
@@ -105,6 +108,18 @@ class SignIn extends Component {
                                             </div>
                                         </div>
                                     </ValidatorForm>
+                                    {/* TODO - Implement OAuth provider list component to render each provider image */}
+                                    <div className={classes.wrapper}>
+                                        <div className="flex flex-middle mt-24">
+                                            Or log in with a provider
+                                            <Button 
+                                                    disabled={auth.loading}
+                                                    onClick={this.handleOnClick}
+                                                    type="onClick">
+                                                    <img src={cognitoImage} className="size-36" alt="fgd" />
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </Grid>
                         </Grid>
@@ -116,19 +131,19 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-    login: PropTypes.object.isRequired,
     loginWithUsernameAndPassword: PropTypes.func.isRequired,
-    setAccountData: PropTypes.func.isRequired
+    setAccountData: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    login: state.login,
+    auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({
     loginWithUsernameAndPassword: state => dispatch(loginWithUsernameAndPassword({...state})),
+    attemptOAuthAuthentication: (provider) => dispatch(attemptOAuthAuthentication(provider)),
     setAccountData: () => dispatch(setAccountData())
-
 });
 
 

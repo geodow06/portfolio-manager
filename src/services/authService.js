@@ -1,64 +1,51 @@
 import localStorageService from "./localStorageService";
-
+import CognitoSession from "auth/cognito/CognitoSession";
 class AuthService {
+    
+    // Set the session token in local storage
+    setSession = session => {
+        if (session) {
+            localStorageService.setItem("session_token", session);
+        } else {
+            console.log("error setting session")
+            localStorageService.removeItem("session_token");
+        }
+    }
 
-    // Mock authenticated user response
-    authenticatedUser = {
-        username:"JohnDoe",
-        role:'ADMIN',
-        token: "correctdummy"
-    };
+    // If valid token create, validate and set the session
+    // If no valid token attempt to do the same from local storage token
+    // Else return false i.e. invalid session
+    // If more than one provider implement switch
+    loginWithCognitoSession = async (token, provider) => {
+        
+        if ( token ) {
+            return this.validateAndSetCognitoSession(token);
+        }
+        let storedSession = localStorageService.getSession();
+        if(storedSession) {
+            return this.validateAndSetCognitoSession(storedSession);
+        }
+        return false;
+    }
+
+    // Attempt to create a new CognitoSession from the provided token
+    // If successful and valid set the token in local storage
+    // Return the user details within the cognito session
+    validateAndSetCognitoSession = sessionToken => {
+        let cognitoSession = new CognitoSession(sessionToken);
+        if (cognitoSession && cognitoSession.isValid()) {
+            this.setSession(sessionToken);
+            return Promise.resolve(cognitoSession.getUserDetails());
+        }
+
+        return Promise.resolve(false);
+    }
 
     loginWithUsernameAndPassword = (username, password) => {
         // TODO Add axios API calls
-        // Password confirmed
-        if(password === "go") {
-            // API returns token
-            // Set token and user details
-            let user = {...this.authenticatedUser, username}
-            // Set token in local storage
-            this.setSession(user.token);
-            // Set user in local storage
-            this.setUser(user);
-
-            return user;
-        } else {
-            throw "Failed to authenticate";
-        }
+        // TODO Create error object
+        throw "Invalid password";
     };
-
-    loginWithToken = () => {
-        // Check local storage for token
-        if( localStorageService.getToken() !== "correctdummy") {
-            throw "Token invalid";
-        }
-        // TODO Mock API return
-        return this.authenticatedUser;
-    };
-    
-    logout = () => {
-        this.setSession(null);
-        this.removeUser();
-    };
-
-    // Set accepted token in local storage
-    setSession = token => {
-        if (token) {
-          localStorage.setItem("jwt_token", token);
-        } else {
-          localStorage.removeItem("jwt_token");
-        }
-    };
-
-    // Save user to localstorage
-    setUser = (user) => {    
-        localStorageService.setItem("auth_user", user);
-    };
-    // Remove user from localstorage
-    removeUser = () => {
-        localStorage.removeItem("auth_user");
-    };
-   
 }
 
 export default new AuthService();
