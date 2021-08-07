@@ -14,13 +14,11 @@ class Auth extends Component {
         let { routes } = context;
 
         this.state = {
-            authenticated: false,
             routes
-        }
-        
-        this.checkJwtAuth();
+        };
     }
 
+    // On component mount run authentication check
     componentDidMount() {
         this.checkJwtAuth();
     }
@@ -34,19 +32,13 @@ class Auth extends Component {
     }
 
     checkJwtAuth = () => {
-        console.log("checking auth");
         // If the route has the callback attribute do nothing
         if(this.isRouteAttribute("callback")) {
-            console.log("Is callback, ignore auth check");
             return;
         }
-        // Attempt to login with token
+        // Attempt to login with session token by passing null token
         authService.loginWithCognitoSession(null).then(user => {
-            console.log("Success logging in with token, now setting state");
             if (user) {
-                this.setState({
-                    authenticated: true
-                });
                 this.props.setUser(user);
                 // If authenticated and the current page is the signin
                 // page redirect to dashboard
@@ -54,14 +46,10 @@ class Auth extends Component {
                     redirectTo(this.props, "/");
                 }
             } else {
-                console.log("Unable to sign in")
                 redirectTo(this.props, "/session/signin");
             }
         }).catch(error => {
             console.log(error);
-            this.setState({
-                authenticated: false
-            });
             redirectTo(this.props, "/session/signin");
         });
     }
@@ -78,9 +66,7 @@ Auth.propTypes = {
 
 Auth.contextType = AppContext;
 
-const mapStateToProps = state => ({
-    // user: state.user
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProp = dispatch => ({
     pushTo: url => dispatch(push(url)),
