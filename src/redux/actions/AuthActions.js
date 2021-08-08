@@ -11,7 +11,7 @@ export const AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR";
 export const LOGOUT = "LOGOUT";
   
 // Initialise the OAuth sesson from a callback href
-export function initAuthFromCallbackURI (callbackHref) {
+export const initAuthFromCallbackURI = callbackHref => {
   return async dispatch => {
     let code;
     try {
@@ -27,7 +27,7 @@ export function initAuthFromCallbackURI (callbackHref) {
     return getToken(code)
       .then((token) => {
         
-        authService.loginWithCognitoSession(token, "cognito").then(user => {
+        authService.loginWithCognitoSession(token).then(user => {
           dispatch(setUser(user));
         })
         
@@ -40,34 +40,19 @@ export function initAuthFromCallbackURI (callbackHref) {
         dispatch(setReduxSession(token));
       });
   };
-}
+};
 
-export const attemptOAuthAuthentication = (provider) => {
+export const redirectToCognitoOAuth = provider => {
   return dispatch => {
     dispatch({type: AUTHENTICATING});
-    
-    switch(provider){
-      case "cognito":
-        window.location.assign(process.env.REACT_APP_COGNITO_AUTHORIZE);
-        break;
-      case "google":
-        // Do something
-        break;
-      case"facebook":
-        // Do something 
-        break;
-
-      default:
-        return dispatch({
-          type: AUTHENTICATION_ERROR,
-          payload: "Invalid OAuth provider"
-        });
-    }
+  
+    window.location.assign(process.env.REACT_APP_COGNITO_AUTHORIZE);
   };
-}
+};
 
-export function loginWithUsernameAndPassword({ username, password }) {
+export const loginWithUsernameAndPassword = ({ username, password }) => {
   return dispatch => {
+
       dispatch({
           type: AUTHENTICATING
       });
@@ -83,12 +68,12 @@ export function loginWithUsernameAndPassword({ username, password }) {
           });
       }
   };
-}
+};
 
-export function logout() {
+export const logout = () => {
     return dispatch => {
         dispatch(clearSession());
         dispatch(removeUser());
         dispatch({type: LOGOUT});
     };
-}
+};

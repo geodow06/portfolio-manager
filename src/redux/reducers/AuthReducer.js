@@ -39,7 +39,8 @@ import {
         return {
           ...initialState,
           error: action.payload,
-          authenticationFailed: true
+          authenticationFailed: true,
+          loading: false
         };
   
       default:

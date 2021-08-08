@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { Button, Card, Grid, CircularProgress, withStyles } from "@material-ui/core";
 import dreamerImage from "assets/images/dreamer.svg";
 import cognitoImage from "assets/images/cognito.png"
-import { loginWithUsernameAndPassword, attemptOAuthAuthentication } from "redux/actions/AuthActions";
+import { loginWithUsernameAndPassword, redirectToCognitoOAuth } from "redux/actions/AuthActions";
 
 const styles = theme => ({
     wrapper: {
@@ -42,7 +42,7 @@ class SignIn extends Component {
     };
 
     handleOnClick = event => {
-        this.props.attemptOAuthAuthentication("cognito");
+        this.props.redirectToCognitoOAuth("cognito");
     }
 
     render() {
@@ -142,7 +142,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     loginWithUsernameAndPassword: state => dispatch(loginWithUsernameAndPassword({...state})),
-    attemptOAuthAuthentication: (provider) => dispatch(attemptOAuthAuthentication(provider)),
+    redirectToCognitoOAuth: (provider) => dispatch(redirectToCognitoOAuth(provider)),
     setAccountData: () => dispatch(setAccountData())
 });
 
