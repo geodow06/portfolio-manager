@@ -2,21 +2,11 @@ import localStorageService from "./localStorageService";
 import CognitoSession from "auth/cognito/CognitoSession";
 class AuthService {
     
-    // Set the session token in local storage
-    setSession = session => {
-        if (session) {
-            localStorageService.setItem("session_token", session);
-        } else {
-            console.log("error setting session")
-            localStorageService.removeItem("session_token");
-        }
-    }
-
     // If valid token create, validate and set the session
     // If no valid token attempt to do the same from local storage token
     // Else return false i.e. invalid session
     // If more than one provider implement switch
-    loginWithCognitoSession = async (token, provider) => {
+    loginWithCognitoSession = async token => {
         
         if ( token ) {
             return this.validateAndSetCognitoSession(token);
@@ -34,7 +24,7 @@ class AuthService {
     validateAndSetCognitoSession = sessionToken => {
         let cognitoSession = new CognitoSession(sessionToken);
         if (cognitoSession && cognitoSession.isValid()) {
-            this.setSession(sessionToken);
+            localStorageService.setItem("session_token", sessionToken);
             return Promise.resolve(cognitoSession.getUserDetails());
         }
 
